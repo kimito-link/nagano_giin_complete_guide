@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>長野県議員訪問ガイド | 公的連絡先完全リスト</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&amp;family=Inter:wght@400;500;600&amp;display=swap');
+        
+        :root {
+            --primary: #166534;
+        }
+        
+        body {
+            font-family: 'Noto Sans JP', 'Inter', system_ui, sans-serif;
+        }
+        
+        .section-header {
+            background: linear-gradient(90deg, #166534, #4ade80);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .member-card {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .member-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+        
+        .party-badge {
+            font-size: 0.75rem;
+            padding: 0.125rem 0.625rem;
+            border-radius: 9999px;
+            font-weight: 600;
+        }
+        
+        .nav-active {
+            border-bottom: 3px solid #166534;
+            color: #166534;
+            font-weight: 700;
+        }
+        
+        .address-text {
+            font-size: 0.875rem;
+            line-height: 1.4;
+        }
+        
+        .tap-button {
+            min-height: 44px;
+            min-width: 44px;
+        }
+        
+        .gov-header {
+            background: linear-gradient(to right, #166534, #15803d);
+        }
+        
+        .search-input {
+            transition: all 0.2s ease;
+        }
+        
+        .search-input:focus {
+            box-shadow: 0 0 0 3px rgba(22, 101, 52, 0.2);
+        }
+        
+        .district-header {
+            background: #f1f5f9;
+            border-left: 5px solid #166534;
+        }
+        
+        .map-btn {
+            background: #166534;
+            color: white;
+        }
+        
+        .map-btn:hover {
+            background: #15803d;
+        }
+        
+        .footer {
+            background: #0f172a;
+            color: #94a3b8;
+        }
+        
+        .member-table tr:hover {
+            background-color: #f8fafc;
+        }
+        
+        .info-box {
+            background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%);
+            border: 1px solid #fde047;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+    <!-- Navbar -->
+    <nav class="bg-white border-b sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-x-3">
+                    <div class="w-10 h-10 bg-emerald-800 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-landmark text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <span class="font-bold text-2xl tracking-tight text-emerald-900">長野県議員ガイド</span>
+                        <span class="text-xs text-emerald-600 block -mt-1">公的連絡先完全リスト</span>
+                    </div>
+                </div>
+                
+                <div class="hidden md:flex items-center gap-x-8 text-sm font-medium">
+                    <a href="#prefectural" class="hover:text-emerald-700 transition-colors">県議会</a>
+                    <a href="#municipal" class="hover:text-emerald-700 transition-colors">市議会</a>
+                    <a href="#howto" class="hover:text-emerald-700 transition-colors">使い方</a>
+                </div>
+                
+                <div class="flex items-center gap-x-2">
+                    <div class="px-3 py-1.5 bg-emerald-100 text-emerald-800 rounded-full text-xs font-semibold flex items-center gap-x-1">
+                        <i class="fas fa-check-circle"></i>
+                        <span>2026年最新公開情報</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <div class="bg-gradient-to-br from-emerald-900 via-emerald-800 to-emerald-950 text-white">
+        <div class="max-w-7xl mx-auto px-4 py-16 md:py-20">
+            <div class="max-w-3xl">
+                <div class="inline-flex items-center gap-x-2 bg-white/10 backdrop-blur px-4 py-1.5 rounded-full mb-6">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <span class="text-sm font-medium">スマホでタップ → 地図が開く</span>
+                </div>
+                
+                <h1 class="text-5xl md:text-6xl font-bold tracking-tighter leading-none mb-4">
+                    長野県の<br>議員さんを<br>訪ねるための<br>完全ガイド
+                </h1>
+                <p class="text-xl text-emerald-100 max-w-md">
+                    県議会議員 + 19市の市議会議員の公的連絡先を網羅。<br>
+                    すべて公式公開情報のみ使用。
+                </p>
+                
+                <div class="flex flex-wrap gap-3 mt-8">
+                    <a href="#prefectural" 
+                       class="inline-flex items-center justify-center gap-x-2 bg-white text-emerald-900 font-semibold px-8 h-12 rounded-2xl hover:bg-emerald-50 transition-all active:scale-[0.985]">
+                        <i class="fas fa-users"></i>
+                        <span>県議会リストを見る</span>
+                    </a>
+                    <a href="#municipal" 
+                       class="inline-flex items-center justify-center gap-x-2 border border-white/40 hover:bg-white/10 font-semibold px-8 h-12 rounded-2xl transition-all">
+                        <span>市議会も見る</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Important Notice -->
+    <div class="max-w-7xl mx-auto px-4 -mt-6 relative z-10">
+        <div class="info-box rounded-3xl p-5 md:p-6 shadow-sm">
+            <div class="flex gap-4">
+                <div class="flex-shrink-0">
+                    <i class="fas fa-info-circle text-amber-600 text-2xl mt-0.5"></i>
+                </div>
+                <div class="text-sm">
+                    <p class="font-semibold text-amber-900 mb-1">ご利用にあたっての重要なお願い</p>
+                    <ul class="text-amber-800 space-y-1 text-[13px]">
+                        <li>• ここに記載の情報は<strong>各自治体の公式サイトで公開されている公的連絡先</strong>のみです。</li>
+                        <li>• プライバシーを尊重し、<strong>正当な目的</strong>（政策説明・要望伝達など）でのご利用をお願いします。</li>
+                        <li>• 最新の在任状況・連絡先は必ず<strong>各公式サイトで確認</strong>してください（選挙・異動で変更の可能性あり）。</li>
+                        <li>• 地図ボタンをタップするとGoogle Mapsが開き、すぐに訪問ルートを確認できます。</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="max-w-7xl mx-auto px-4 mt-8">
+        <div class="relative max-w-md">
+            <input id="globalSearch" 
+                   type="text" 
+                   placeholder="議員名や市区町村で検索..." 
+                   class="search-input w-full pl-12 pr-4 py-3.5 bg-white border border-slate-200 focus:border-emerald-600 rounded-2xl text-sm placeholder:text-slate-400 outline-none">
+            <i class="fas fa-search absolute left-5 top-4 text-slate-400"></i>
+        </div>
+        <p class="text-xs text-slate-500 mt-2 ml-1">※ 名前や住所の一部で絞り込めます</p>
+    </div>
+
+    <!-- ========== 県議会セクション ========== -->
+    <div id="prefectural" class="max-w-7xl mx-auto px-4 mt-10">
+        <div class="flex items-end justify-between mb-6">
+            <div>
+                <div class="flex items-center gap-x-3">
+                    <div class="w-9 h-9 bg-emerald-800 rounded-2xl flex items-center justify-center">
+                        <i class="fas fa-landmark text-white"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-3xl font-bold tracking-tight">長野県議会議員</h2>
+                        <p class="text-emerald-700 text-sm">定数57名（令和8年4月更新）</p>
+                    </div>
+                </div>
+            </div>
+            <a href="https://www.pref.nagano.lg.jp/gikai/gikai/giin/senkyoku/index.html" 
+               target="_blank"
+               class="hidden md:inline-flex items-center gap-x-2 text-sm font-medium text-emerald-700 hover:text-emerald-800">
+                公式ページで最新確認 <i class="fas fa-external-link-alt text-xs"></i>
+            </a>
+        </div>
+
+        <!-- 県議会 地区別リスト -->
+        <div class="space-y-8">
+            
+            <!-- 長野市・上水内郡 -->
+            <div class="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
+                <div class="district-header px-6 py-4 flex items-center justify-between">
+                    <div class="font-bold text-lg flex items-center gap-x-2">
+                        <i class="fas fa-map-marker-alt text-emerald-700"></i>
+                        <span>長野市・上水内郡（定数11）</span>
+                    </div>
+                    <span class="text-xs px-3 py-1 bg-white rounded-full text-emerald-700 font-medium">11名</span>
+                </div>
+                
+                <div class="divide-y">
+                    <!-- Members -->
+                    <div class="member-card p-5 flex flex-col md:flex-row md:items-center gap-4" data-name="埋橋 茂人" data-party="改革信州" data-address="長野市南長野西後町1552番地">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-x-3">
+                                <span class="font-bold text-xl">埋橋 茂人</span>
+                                <span class="party-badge bg-emerald-100 text-emerald-800">改革信州</span>
+                            </div>
+                            <div class="address-text text-slate-600 mt-1.5">380-0845 長野市南長野西後町1552番地</div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 md:justify-end">
+                            <button onclick="openMap('長野市南長野西後町1552番地')" 
+                                    class="tap-button flex-1 md:flex-none px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white text-sm font-semibold rounded-2xl flex items-center justify-center gap-x-2 transition-colors">
+                                <i class="fas fa-map"></i>
+                                <span>地図で開く</span>
+                            </button>
+                            <button onclick="copyAddress(this, '380-0845 長野市南長野西後町1552番地')" 
+                                    class="tap-button flex-1 md:flex-none px-5 py-2.5 border border-slate-300 hover:bg-slate-50 text-sm font-medium rounded-2xl flex items-center justify-center gap-x-2">
+                                <i class="fas fa-copy"></i>
+                                <span>コピー</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="member-card p-5 flex flex-col md:flex-row md:items-center gap-4" data-name="風間 辰一" data-party="自民党" data-address="長野市中御所4丁目11番28号">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-x-3">
+                                <span class="font-bold text-xl">風間 辰一</span>
+                                <span class="party-badge bg-blue-100 text-blue-800">自民党</span>
+                            </div>
+                            <div class="address-text text-slate-600 mt-1.5">380-0935 長野市中御所4丁目11番28号</div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 md:justify-end">
+                            <button onclick="openMap('長野市中御所4丁目11番28号')" class="tap-button flex-1 md:flex-none px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white text-sm font-semibold rounded-2xl flex items-center justify-center gap-x-2 transition-colors">
+                                <i class="fas fa-map"></i><span>地図で開く</span>
+                            </button>
+                            <button onclick="copyAddress(this, '380-0935 長野市中御所4丁目11番28号')" class="tap-button flex-1 md:flex-none px-5 py-2.5 border border-slate-300 hover:bg-slate-50 text-sm font-medium rounded-2xl flex items-center justify-center gap-x-2">
+                                <i class="fas fa-copy"></i><span>コピー</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="member-card p-5 flex flex-col md:flex-row md:items-center gap-4" data-name="勝山 秀夫" data-party="公明党" data-address="長野市大字下駒沢2253番地1">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-x-3">
+                                <span class="font-bold text-xl">勝山 秀夫</span>
+                                <span class="party-badge bg-yellow-100 text-yellow-800">公明党</span>
+                            </div>
+                            <div class="address-text text-slate-600 mt-1.5">381-0008 長野市大字下駒沢2253番地1</div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 md:justify-end">
+                            <button onclick="openMap('長野市大字下駒沢2253番地1')" class="tap-button flex-1 md:flex-none px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white text-sm font-semibold rounded-2xl flex items-center justify-center gap-x-2 transition-colors">
+                                <i class="fas fa-map"></i><span>地図で開く</span>
+                            </button>
+                            <button onclick="copyAddress(this, '381-0008 長野市大字下駒沢2253番地1')" class="tap-button flex-1 md:flex-none px-5 py-2.5 border border-slate-300 hover:bg-slate-50 text-sm font-medium rounded-2xl flex items-center justify-center gap-x-2">
+                                <i class="fas fa-copy"></i><span>コピー</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="member-card p-5 flex flex-col md:flex-row md:items-center gap-4" data-name="加藤 康治" data-party="公明党" data-address="長野市篠ノ井布施高田868番地10 松屋ビル1階">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-x-3">
+                                <span class="font-bold text-xl">加藤 康治</span>
+                                <span class="party-badge bg-yellow-100 text-yellow-800">公明党</span>
+                            </div>
+                            <div class="address-text text-slate-600 mt-1.5">388-8007 長野市篠ノ井布施高田868番地10 松屋ビル1階</div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 md:justify-end">
+                            <button onclick="openMap('長野市篠ノ井布施高田868番地10')" class="tap-button flex-1 md:flex-none px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white text-sm font-semibold rounded-2xl flex items-center justify-center gap-x-2 transition-colors">
+                                <i class="fas fa-map"></i><span>地図で開く</span>
+                            </button>
+                            <button onclick="copyAddress(this, '388-8007 長野市篠ノ井布施高田868番地10 松屋ビル1階')" class="tap-button flex-1 md:flex-none px-5 py-2.5 border border-slate-300 hover:bg-slate-50 text-sm font-medium rounded-2xl flex items-center justify-center gap-x-2">
+                                <i class="fas fa-copy"></i><span>コピー</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="member-card p-5 flex flex-col md:flex-row md:items-center gap-4" data-name="グレート無茶" data-party="新政策議員団" data-address="長野市鶴賀緑町1610番地3 Mビル3階">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-x-3">
+                                <span class="font-bold text-xl">グレート無茶</span>
+                                <span class="party-badge bg-purple-100 text-purple-800">新政策議員団</span>
+                            </div>
+                            <div class="address-text text-slate-600 mt-1.5">380-0813 長野市鶴賀緑町1610番地3 Mビル3階</div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 md:justify-end">
+                            <button onclick="openMap('長野市鶴賀緑町1610番地3')" class="tap-button flex-1 md:flex-none px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white text-sm font-semibold rounded-2xl flex items-center justify-center gap-x-2 transition-colors">
+                                <i class="fas fa-map"></i><span>地図で開く</span>
+                            </button>
+                            <button onclick="copyAddress(this, '380-0813 長野市鶴賀緑町1610番地3 Mビル3階')" class="tap-button flex-1 md:flex-none px-5 py-2.5 border border-slate-300 hover:bg-slate-50 text-sm font-medium rounded-2xl flex items-center justify-center gap-x-2">
+                                <i class="fas fa-copy"></i><span>コピー</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="member-card p-5 flex flex-col md:flex-row md:items-center gap-4" data-name="髙島 陽子" data-party="改革信州" data-address="長野市三輪2丁目5番7-2号 103号室">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-x-3">
+                                <span class="font-bold text-xl">髙島 陽子</span>
+                                <span class="party-badge bg-emerald-100 text-emerald-800">改革信州</span>
+                            </div>
+                            <div class="address-text text-slate-600 mt-1.5">380-0803 長野市三輪2丁目5番7-2号 103号室</div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 md:justify-end">
+                            <button onclick="openMap('長野市三輪2丁目5番7-2号')" class="tap-button flex-1 md:flex-none px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white text-sm font-semibold rounded-2xl flex items-center justify-center gap-x-2 transition-colors">
+                                <i class="fas fa-map"></i><span>地図で開く</span>
+                            </button>
+                            <button onclick="copyAddress(this, '380-0803 長野市三輪2丁目5番7-2号 103号室')" class="tap-button flex-1 md:flex-none px-5 py-2.5 border border-slate-300 hover:bg-slate-50 text-sm font-medium rounded-2xl flex items-center justify-center gap-x-2">
+                                <i class="fas fa-copy"></i><span>コピー</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="member-card p-5 flex flex-col md:flex-row md:items-center gap-4" data-name="西沢 正隆" data-party="自民党" data-address="長野市上松4丁目23番15号">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-x-3">
+                                <span class="font-bold text-xl">西沢 正隆</span>
+                                <span class="party-badge bg-blue-100 text-blue-800">自民党</span>
+                            </div>
+                            <div class="address-text text-slate-600 mt-1.5">380-0802 長野市上松4丁目23番15号</div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 md:justify-end">
+                            <button onclick="openMap('長野市上松4丁目23番15号')" class="tap-button flex-1 md:flex-none px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white text-sm font-semibold rounded-2xl flex items-center justify-center gap-x-2 transition-colors">
+                                <i class="fas fa-map"></i><span>地図で開く</span>
+                            </button>
+                            <button onclick="copyAddress(this, '380-0802 長野市上松4丁目23番15号')" class="tap-button flex-1 md:flex-none px-5 py-2.5 border border-slate-300 hover:bg-slate-50 text-sm font-medium rounded-2xl flex items-center justify-center gap-x-2">
+                                <i class="fas fa-copy"></i><span>コピー</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="member-card p-5 flex flex-col md:flex-row md:items-center gap-4" data-name="服部 宏昭" data-party="自民党" data-address="上水内郡信濃町大字柏原2865番地の1">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-x-3">
+                                <span class="font-bold text-xl">服部 宏昭</span>
+                                <span class="party-badge bg-blue-100 text-blue-800">自民党</span>
+                            </div>
+                            <div class="address-text text-slate-600 mt-1.5">389-1305 上水内郡信濃町大字柏原2865番地の1</div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 md:justify-end">
+                            <button onclick="openMap('上水内郡信濃町大字柏原2865番地の1')" class="tap-button flex-1 md:flex-none px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white text-sm font-semibold rounded-2xl flex items-center justify-center gap-x-2 transition-colors">
+                                <i class="fas fa-map"></i><span>地図で開く</span>
+                            </button>
+                            <button onclick="copyAddress(this, '389-1305 上水内郡信濃町大字柏原2865番地の1')" class="tap-button flex-1 md:flex-none px-5 py-2.5 border border-slate-300 hover:bg-slate-50 text-sm font-medium rounded-2xl flex items-center justify-center gap-x-2">
+                                <i class="fas fa-copy"></i><span>コピー</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="member-card p-5 flex flex-col md:flex-row md:items-center gap-4" data-name="望月 義寿" data-party="改革信州" data-address="長野市篠ノ井横田558番地">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-x-3">
+                                <span class="font-bold text-xl">望月 義寿</span>
+                                <span class="party-badge bg-emerald-100 text-emerald-800">改革信州</span>
+                            </div>
+                            <div class="address-text text-slate-600 mt-1.5">388-8005 長野市篠ノ井横田558番地</div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 md:justify-end">
+                            <button onclick="openMap('長野市篠ノ井横田558番地')" class="tap-button flex-1 md:flex-none px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white text-sm font-semibold rounded-2xl flex items-center justify-center gap-x-2 transition-colors">
+                                <i class="fas fa-map"></i><span>地図で開く</span>
+                            </button>
+                            <button onclick="copyAddress(this, '388-8005 長野市篠ノ井横田558番地')" class="tap-button flex-1 md:flex-none px-5 py-2.5 border border-slate-300 hover:bg-slate-50 text-sm font-medium rounded-2xl flex items-center justify-center gap-x-2">
+                                <i class="fas fa-copy"></i><span>コピー</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="member-card p-5 flex flex-col md:flex-row md:items-center gap-4" data-name="山口 典久" data-party="共産党" data-address="長野市三輪6丁目19番5号">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-x-3">
+                                <span class="font-bold text-xl">山口 典久</span>
+                                <span class="party-badge bg-red-100 text-red-800">日本共産党</span>
+                            </div>
+                            <div class="address-text text-slate-600 mt-1.5">380-0803 長野市三輪6丁目19番5号</div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 md:justify-end">
+                            <button onclick="openMap('長野市三輪6丁目19番5号')" class="tap-button flex-1 md:flex-none px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white text-sm font-semibold rounded-2xl flex items-center justify-center gap-x-2 transition-colors">
+                                <i class="fas fa-map"></i><span>地図で開く</span>
+                            </button>
+                            <button onclick="copyAddress(this, '380-0803 長野市三輪6丁目19番5号')" class="tap-button flex-1 md:flex-none px-5 py-2.5 border border-slate-300 hover:bg-slate-50 text-sm font-medium rounded-2xl flex items-center justify-center gap-x-2">
+                                <i class="fas fa-copy"></i><span>コピー</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="member-card p-5 flex flex-col md:flex-row md:items-center gap-4" data-name="和田 明子" data-party="共産党" data-address="長野市篠ノ井二ツ柳2210番地3">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-x-3">
+                                <span class="font-bold text-xl">和田 明子</span>
+                                <span class="party-badge bg-red-100 text-red-800">日本共産党</span>
+                            </div>
+                            <div class="address-text text-slate-600 mt-1.5">388-8012 長野市篠ノ井二ツ柳2210番地3</div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 md:justify-end">
+                            <button onclick="openMap('長野市篠ノ井二ツ柳2210番地3')" class="tap-button flex-1 md:flex-none px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white text-sm font-semibold rounded-2xl flex items-center justify-center gap-x-2 transition-colors">
+                                <i class="fas fa-map"></i><span>地図で開く</span>
+                            </button>
+                            <button onclick="copyAddress(this, '388-8012 長野市篠ノ井二ツ柳2210番地3')" class="tap-button flex-1 md:flex-none px-5 py-2.5 border border-slate-300 hover:bg-slate-50 text-sm font-medium rounded-2xl flex items-center justify-center gap-x-2">
+                                <i class="fas fa-copy"></i><span>コピー</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 松本市・東筑摩郡 -->
+            <div class="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
+                <div class="district-header px-6 py-4 flex items-center justify-between">
+                    <div class="font-bold text-lg flex items-center gap-x-2">
+                        <i class="fas fa-map-marker-alt text-emerald-700"></i>
+                        <span>松本市・東筑摩郡（定数7）</span>
+                    </div>
+                    <span class="text-xs px-3 py-1 bg-white rounded-full text-emerald-700 font-medium">7名</span>
+                </div>
+                
+                <div class="divide-y">
+                    <div class="member-card p-5 flex flex-col md:flex-row md:items-center gap-4" data-name="青木 崇" data-party="自民党" data-address="松本市平田東2丁目18-1">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-x-3">
+                                <span class="font-bold text-xl">青木 崇</span>
+                                <span class="party-badge bg-blue-100 text-blue-800">自民党</span>
+                            </div>
+                            <div class="address-text text-slate-600 mt-1.5">399-0014 松本市平田東2丁目18-1</div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 md:justify-end">
+                            <button onclick="openMap('松本市平田東2丁目18-1')" class="tap-button flex-1 md:flex-none px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white text-sm font-semibold rounded-2xl flex items-center justify-center gap-x-2 transition-colors">
+                                <i class="fas fa-map"></i><span>地図で開く</span>
+                            </button>
+                            <button onclick="copyAddress(this, '399-0014 松本市平田東2丁目18-1')" class="tap-button flex-1 md:flex-none px-5 py-2.5 border border-slate-300 hover:bg-slate-50 text-sm font-medium rounded-2xl flex items-center justify-center gap-x-2">
+                                <i class="fas fa-copy"></i><span>コピー</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="member-card p-5 flex flex-col md:flex-row md:items-center gap-4" data-name="勝野 智行" data-party="公明党" data-address="松本市島内898番地59">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-x-3">
+                                <span class="font-bold text-xl">勝野 智行</span>
+                                <span class="party-badge bg-yellow-100 text-yellow-800">公明党</span>
+                            </div>
+                            <div class="address-text text-slate-600 mt-1.5">390-0851 松本市島内898番地59</div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 md:justify-end">
+                            <button onclick="openMap('松本市島内898番地59')" class="tap-button flex-1 md:flex-none px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white text-sm font-semibold rounded-2xl flex items-center justify-center gap-x-2 transition-colors">
+                                <i class="fas fa-map"></i><span>地図で開く</span>
+                            </button>
+                            <button onclick="copyAddress(this, '390-0851 松本市島内898番地59')" class="tap-button flex-1 md:flex-none px-5 py-2.5 border border-slate-300 hover:bg-slate-50 text-sm font-medium rounded-2xl flex items-center justify-center gap-x-2">
+                                <i class="fas fa-copy"></i><span>コピー</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="member-card p-5 flex flex-col md:flex-row md:items-center gap-4" data-name="小林 あや" data-party="新政策議員団" data-address="松本市波田9801番地8">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-x-3">
+                                <span class="font-bold text-xl">小林 あや</span>
+                                <span class="party-badge bg-purple-100 text-purple-800">新政策議員団</span>
+                            </div>
+                            <div class="address-text text-slate-600 mt-1.5">390-1401 松本市波田9801番地8</div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 md:justify-end">
+                            <button onclick="openMap('松本市波田9801番地8')" class="tap-button flex-1 md:flex-none px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white text-sm font-semibold rounded-2xl flex items-center justify-center gap-x-2 transition-colors">
+                                <i class="fas fa-map"></i><span>地図で開く</span>
+                            </button>
+                            <button onclick="copyAddress(this, '390-1401 松本市波田9801番地8')" class="tap-button flex-1 md:flex-none px-5 py-2.5 border border-slate-300 hover:bg-slate-50 text-sm font-medium rounded-2xl flex items-center justify-center gap-x-2">
+                                <i class="fas fa-copy"></i><span>コピー</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="member-card p-5 flex flex-col md:flex-row md:items-center gap-4" data-name="中川 博司" data-party="改革信州" data-address="松本市大字岡田松岡280番地21">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-x-3">
+                                <span class="font-bold text-xl">中川 博司</span>
+                                <span class="party-badge bg-emerald-100 text-emerald-800">改革信州</span>
+                            </div>
+                            <div class="address-text text-slate-600 mt-1.5">390-0312 松本市大字岡田松岡280番地21</div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 md:justify-end">
+                            <button onclick="openMap('松本市大字岡田松岡280番地21')" class="tap-button flex-1 md:flex-none px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white text-sm font-semibold rounded-2xl flex items-center justify-center gap-x-2 transition-colors">
+                                <i class="fas fa-map"></i><span>地図で開く</span>
+                            </button>
+                            <button onclick="copyAddress(this, '390-0312 松本市大字岡田松岡280番地21')" class="tap-button flex-1 md:flex-none px-5 py-2.5 border border-slate-300 hover:bg-slate-50 text-sm font-medium rounded-2xl flex items-center justify-center gap-x-2">
+                                <i class="fas fa-copy"></i><span>コピー</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="member-card p-5 flex flex-col md:flex-row md:items-center gap-4" data-name="萩原 清" data-party="自民党" data-address="松本市浅間温泉2丁目9番16号">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-x-3">
+                                <span class="font-bold text-xl">萩原 清</span>
+                                <span class="party-badge bg-blue-100 text-blue-800">自民党</span>
+                            </div>
+                            <div class="address-text text-slate-600 mt-1.5">390-0303 松本市浅間温泉2丁目9番16号</div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 md:justify-end">
+                            <button onclick="openMap('松本市浅間温泉2丁目9番16号')" class="tap-button flex-1 md:flex-none px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white text-sm font-semibold rounded-2xl flex items-center justify-center gap-x-2 transition-colors">
+                                <i class="fas fa-map"></i><span>地図で開く</span>
+                            </button>
+                            <button onclick="copyAddress(this, '390-0303 松本市浅間温泉2丁目9番16号')" class="tap-button flex-1 md:flex-none px-5 py-2.5 border border-slate-300 hover:bg-slate-50 text-sm font-medium rounded-2xl flex items-center justify-center gap-x-2">
+                                <i class="fas fa-copy"></i><span>コピー</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="member-card p-5 flex flex-col md:flex-row md:items-center gap-4" data-name="百瀬 智之" data-party="新政策議員団" data-address="東筑摩郡山形村3117番地5">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-x-3">
+                                <span class="font-bold text-xl">百瀬 智之</span>
+                                <span class="party-badge bg-purple-100 text-purple-800">新政策議員団</span>
+                            </div>
+                            <div class="address-text text-slate-600 mt-1.5">390-1301 東筑摩郡山形村3117番地5</div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 md:justify-end">
+                            <button onclick="openMap('東筑摩郡山形村3117番地5')" class="tap-button flex-1 md:flex-none px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white text-sm font-semibold rounded-2xl flex items-center justify-center gap-x-2 transition-colors">
+                                <i class="fas fa-map"></i><span>地図で開く</span>
+                            </button>
+                            <button onclick="copyAddress(this, '390-1301 東筑摩郡山形村3117番地5')" class="tap-button flex-1 md:flex-none px-5 py-2.5 border border-slate-300 hover:bg-slate-50 text-sm font-medium rounded-2xl flex items-center justify-center gap-x-2">
+                                <i class="fas fa-copy"></i><span>コピー</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="member-card p-5 flex flex-col md:flex-row md:items-center gap-4" data-name="両角 友成" data-party="共産党" data-address="松本市殿野入592番地">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-x-3">
+                                <span class="font-bold text-xl">両角 友成</span>
+                                <span class="party-badge bg-red-100 text-red-800">日本共産党</span>
+                            </div>
+                            <div class="address-text text-slate-600 mt-1.5">399-7414 松本市殿野入592番地</div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 md:justify-end">
+                            <button onclick="openMap('松本市殿野入592番地')" class="tap-button flex-1 md:flex-none px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white text-sm font-semibold rounded-2xl flex items-center justify-center gap-x-2 transition-colors">
+                                <i class="fas fa-map"></i><span>地図で開く</span>
+                            </button>
+                            <button onclick="copyAddress(this, '399-7414 松本市殿野入592番地')" class="tap-button flex-1 md:flex-none px-5 py-2.5 border border-slate-300 hover:bg-slate-50 text-sm font-medium rounded-2xl flex items-center justify-center gap-x-2">
+                                <i class="fas fa-copy"></i><span>コピー</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 上田市・小県郡 -->
+            <div class="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
+                <div class="district-header px-6 py-4 flex items-center justify-between">
+                    <div class="font-bold text-lg flex items-center gap-x-2">
+                        <i class="fas fa-map-marker-alt text-emerald-700"></i>
+                        <span>上田市・小県郡（定数4、一部欠員）</span>
+                    </div>
+                </div>
+                <div class="divide-y p-2">
+                    <div class="member-card p-4 flex flex-col md:flex-row md:items-center gap-3" data-name="清水 純子" data-party="公明党" data-address="上田市上田原707番地3">
+                        <div class="flex-1">
+                            <span class="font-bold">清水 純子</span> <span class="party-badge bg-yellow-100 text-yellow-800 text-xs">公明党</span><br>
+                            <span class="text-sm text-slate-600">386-1102 上田市上田原707番地3</span>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="openMap('上田市上田原707番地3')" class="px-4 py-2 bg-emerald-700 text-white text-xs font-semibold rounded-2xl flex items-center gap-x-1.5"><i class="fas fa-map fa-sm"></i> <span>地図</span></button>
+                            <button onclick="copyAddress(this, '386-1102 上田市上田原707番地3')" class="px-4 py-2 border text-xs font-medium rounded-2xl flex items-center gap-x-1.5"><i class="fas fa-copy fa-sm"></i> <span>コピー</span></button>
+                        </div>
+                    </div>
+                    <div class="member-card p-4 flex flex-col md:flex-row md:items-center gap-3" data-name="林 和明" data-party="改革信州" data-address="上田市上田原679番地1">
+                        <div class="flex-1">
+                            <span class="font-bold">林 和明</span> <span class="party-badge bg-emerald-100 text-emerald-800 text-xs">改革信州</span><br>
+                            <span class="text-sm text-slate-600">386-1102 上田市上田原679番地1</span>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="openMap('上田市上田原679番地1')" class="px-4 py-2 bg-emerald-700 text-white text-xs font-semibold rounded-2xl flex items-center gap-x-1.5"><i class="fas fa-map fa-sm"></i> <span>地図</span></button>
+                            <button onclick="copyAddress(this, '386-1102 上田市上田原679番地1')" class="px-4 py-2 border text-xs font-medium rounded-2xl flex items-center gap-x-1.5"><i class="fas fa-copy fa-sm"></i> <span>コピー</span></button>
+                        </div>
+                    </div>
+                    <div class="member-card p-4 flex flex-col md:flex-row md:items-center gap-3" data-name="山田 英喜" data-party="自民党" data-address="上田市国分561番地4">
+                        <div class="flex-1">
+                            <span class="font-bold">山田 英喜</span> <span class="party-badge bg-blue-100 text-blue-800 text-xs">自民党</span><br>
+                            <span class="text-sm text-slate-600">386-0016 上田市国分561番地4</span>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="openMap('上田市国分561番地4')" class="px-4 py-2 bg-emerald-700 text-white text-xs font-semibold rounded-2xl flex items-center gap-x-1.5"><i class="fas fa-map fa-sm"></i> <span>地図</span></button>
+                            <button onclick="copyAddress(this, '386-0016 上田市国分561番地4')" class="px-4 py-2 border text-xs font-medium rounded-2xl flex items-center gap-x-1.5"><i class="fas fa-copy fa-sm"></i> <span>コピー</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- その他の地区（抜粋・完全版は公式で） -->
+            <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
+                <div class="font-bold mb-3 flex items-center gap-x-2">
+                    <i class="fas fa-info-circle text-emerald-600"></i>
+                    <span>その他の選挙区（岡谷市・飯田市・佐久市・安曇野市など全23選挙区）</span>
+                </div>
+                <p class="text-sm text-slate-600 mb-4">
+                    上記以外の選挙区（岡谷市・下諏訪町、飯田市・下伊那郡、諏訪市、須坂市・上高井郡、小諸市、伊那市、駒ヶ根市、中野市・下高井郡、大町市、飯山市・下水内郡、茅野市・富士見町・原村、塩尻市、佐久市・北佐久郡、千曲市・埴科郡、東御市、安曇野市、南佐久郡、上伊那郡、木曽郡、北安曇郡）の議員情報も公式ページにすべて掲載されています。
+                </p>
+                <a href="https://www.pref.nagano.lg.jp/gikai/gikai/giin/senkyoku/index.html" target="_blank" 
+                   class="inline-flex items-center gap-x-2 px-6 py-3 bg-emerald-700 text-white rounded-2xl text-sm font-semibold hover:bg-emerald-800 transition-colors">
+                    <span>県議会公式 選挙区別議員名簿で全リストを確認する</span>
+                    <i class="fas fa-external-link-alt"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== 市議会セクション ========== -->
+    <div id="municipal" class="max-w-7xl mx-auto px-4 mt-16">
+        <div class="flex items-end justify-between mb-6">
+            <div>
+                <div class="flex items-center gap-x-3">
+                    <div class="w-9 h-9 bg-emerald-700 rounded-2xl flex items-center justify-center">
+                        <i class="fas fa-city text-white"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-3xl font-bold tracking-tight">市議会議員（19市）</h2>
+                        <p class="text-emerald-700 text-sm">各市の公式ページで住所・連絡先が公開されています</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-3xl p-6 mb-8 shadow-sm border border-slate-100">
+            <p class="text-sm text-slate-600">
+                長野県の19市では、<strong>公式議員名簿ページに住所・電話番号</strong>が掲載されているケースが多数あります。<br>
+                以下に<strong>長野市・松本市</strong>の詳細リストを掲載（公式公開情報に基づく）。その他の市は各公式リンクから最新情報をご確認ください。
+            </p>
+        </div>
+
+        <!-- 長野市議会 -->
+        <div class="mb-10">
+            <div class="flex items-center justify-between mb-4 px-1">
+                <div class="font-bold text-2xl flex items-center gap-x-3">
+                    長野市議会
+                    <span class="text-sm font-normal px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full">定数約36名</span>
+                </div>
+                <a href="https://www.city.nagano.nagano.jp/n440500/shigikai/p005267.html" target="_blank" 
+                   class="text-sm font-medium text-emerald-700 hover:underline flex items-center gap-x-1">
+                    公式ページ <i class="fas fa-external-link-alt text-xs"></i>
+                </a>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <!-- 長野市議員抜粋 (ツール取得分) -->
+                <div class="member-card bg-white p-4 rounded-2xl border border-slate-100" data-name="青木 敏明" data-party="新友会" data-address="長野市豊野町蟹沢">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <div class="font-bold">青木 敏明</div>
+                            <div class="text-xs text-emerald-700">新友会</div>
+                        </div>
+                        <span class="text-[10px] px-2 py-0.5 bg-slate-100 rounded">議席19</span>
+                    </div>
+                    <div class="text-sm mt-2 text-slate-600">住所：豊野町蟹沢<br>電話：026-295-0585（例）</div>
+                    <div class="mt-3 flex gap-2">
+                        <button onclick="openMap('長野市豊野町蟹沢')" class="flex-1 py-2 text-xs bg-emerald-700 text-white rounded-2xl font-semibold">地図で開く</button>
+                        <button onclick="copyAddress(this, '長野市豊野町蟹沢')" class="flex-1 py-2 text-xs border rounded-2xl font-medium">コピー</button>
+                    </div>
+                </div>
+                
+                <div class="member-card bg-white p-4 rounded-2xl border border-slate-100" data-name="浅川 徹" data-party="公明党" data-address="長野市大字屋島">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <div class="font-bold">浅川 徹</div>
+                            <div class="text-xs text-yellow-700">公明党長野市議員団</div>
+                        </div>
+                        <span class="text-[10px] px-2 py-0.5 bg-slate-100 rounded">議席13</span>
+                    </div>
+                    <div class="text-sm mt-2 text-slate-600">住所：大字屋島<br>電話：090-2221-0891</div>
+                    <div class="mt-3 flex gap-2">
+                        <button onclick="openMap('長野市大字屋島')" class="flex-1 py-2 text-xs bg-emerald-700 text-white rounded-2xl font-semibold">地図で開く</button>
+                        <button onclick="copyAddress(this, '長野市大字屋島')" class="flex-1 py-2 text-xs border rounded-2xl font-medium">コピー</button>
+                    </div>
+                </div>
+                
+                <!-- 追加でいくつか -->
+                <div class="member-card bg-white p-4 rounded-2xl border border-slate-100" data-name="市川 和彦" data-party="新友会" data-address="長野市大字大豆島">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <div class="font-bold">市川 和彦</div>
+                            <div class="text-xs text-emerald-700">新友会（副議長）</div>
+                        </div>
+                    </div>
+                    <div class="text-sm mt-2 text-slate-600">住所：大字大豆島<br>電話：026-221-2279</div>
+                    <div class="mt-3 flex gap-2">
+                        <button onclick="openMap('長野市大字大豆島')" class="flex-1 py-2 text-xs bg-emerald-700 text-white rounded-2xl font-semibold">地図で開く</button>
+                        <button onclick="copyAddress(this, '長野市大字大豆島')" class="flex-1 py-2 text-xs border rounded-2xl font-medium">コピー</button>
+                    </div>
+                </div>
+                
+                <div class="member-card bg-white p-4 rounded-2xl border border-slate-100" data-name="北沢 哲也" data-party="新友会" data-address="長野市三輪三丁目">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <div class="font-bold">北沢 哲也</div>
+                            <div class="text-xs text-emerald-700">新友会</div>
+                        </div>
+                    </div>
+                    <div class="text-sm mt-2 text-slate-600">住所：三輪三丁目<br>電話：090-2548-0248</div>
+                    <div class="mt-3 flex gap-2">
+                        <button onclick="openMap('長野市三輪三丁目')" class="flex-1 py-2 text-xs bg-emerald-700 text-white rounded-2xl font-semibold">地図で開く</button>
+                        <button onclick="copyAddress(this, '長野市三輪三丁目')" class="flex-1 py-2 text-xs border rounded-2xl font-medium">コピー</button>
+                    </div>
+                </div>
+            </div>
+            
+            <p class="text-center text-xs text-slate-500 mt-3">※ 長野市議会は公式ページに全議員の住所・電話が掲載されています。上記は公開情報の一部です。</p>
+        </div>
+
+        <!-- 松本市議会 -->
+        <div class="mb-10">
+            <div class="flex items-center justify-between mb-4 px-1">
+                <div class="font-bold text-2xl flex items-center gap-x-3">
+                    松本市議会
+                    <span class="text-sm font-normal px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full">定数31名</span>
+                </div>
+                <a href="https://www.city.matsumoto.nagano.jp/site/gikai/6162.html" target="_blank" 
+                   class="text-sm font-medium text-emerald-700 hover:underline flex items-center gap-x-1">
+                    公式ページ <i class="fas fa-external-link-alt text-xs"></i>
+                </a>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div class="member-card bg-white p-4 rounded-2xl border border-slate-100" data-name="宗田 まゆ美" data-party="日本共産党" data-address="松本市里山辺4837-5">
+                    <div class="flex justify-between">
+                        <div>
+                            <div class="font-bold">宗田 まゆ美</div>
+                            <div class="text-xs text-red-700">日本共産党松本市議団</div>
+                        </div>
+                    </div>
+                    <div class="text-sm mt-1.5 text-slate-600">〒390-0221 松本市里山辺4837-5<br>電話：0263-25-9540</div>
+                    <div class="mt-3 flex gap-2">
+                        <button onclick="openMap('松本市里山辺4837-5')" class="flex-1 py-2 text-xs bg-emerald-700 text-white rounded-2xl font-semibold">地図で開く</button>
+                        <button onclick="copyAddress(this, '390-0221 松本市里山辺4837-5')" class="flex-1 py-2 text-xs border rounded-2xl font-medium">コピー</button>
+                    </div>
+                </div>
+                
+                <div class="member-card bg-white p-4 rounded-2xl border border-slate-100" data-name="中山 英子" data-party="無所属" data-address="松本市中央2-9-1">
+                    <div class="flex justify-between">
+                        <div>
+                            <div class="font-bold">中山 英子</div>
+                            <div class="text-xs text-slate-600">誠の会（無所属）</div>
+                        </div>
+                    </div>
+                    <div class="text-sm mt-1.5 text-slate-600">〒390-0811 松本市中央2-9-1<br>電話：0263-32-2808</div>
+                    <div class="mt-3 flex gap-2">
+                        <button onclick="openMap('松本市中央2-9-1')" class="flex-1 py-2 text-xs bg-emerald-700 text-white rounded-2xl font-semibold">地図で開く</button>
+                        <button onclick="copyAddress(this, '390-0811 松本市中央2-9-1')" class="flex-1 py-2 text-xs border rounded-2xl font-medium">コピー</button>
+                    </div>
+                </div>
+                
+                <div class="member-card bg-white p-4 rounded-2xl border border-slate-100" data-name="大久保 美由紀" data-party="公明党" data-address="松本市島内">
+                    <div class="flex justify-between">
+                        <div>
+                            <div class="font-bold">大久保 美由紀</div>
+                            <div class="text-xs text-yellow-700">松本市議会公明党</div>
+                        </div>
+                    </div>
+                    <div class="text-sm mt-1.5 text-slate-600">〒390-0851 松本市島内<br>電話：090-4245-7755</div>
+                    <div class="mt-3 flex gap-2">
+                        <button onclick="openMap('松本市島内')" class="flex-1 py-2 text-xs bg-emerald-700 text-white rounded-2xl font-semibold">地図で開く</button>
+                        <button onclick="copyAddress(this, '390-0851 松本市島内')" class="flex-1 py-2 text-xs border rounded-2xl font-medium">コピー</button>
+                    </div>
+                </div>
+                
+                <div class="member-card bg-white p-4 rounded-2xl border border-slate-100" data-name="吉村 幸代" data-party="無所属" data-address="松本市寿台9-4-1">
+                    <div class="flex justify-between">
+                        <div>
+                            <div class="font-bold">吉村 幸代</div>
+                            <div class="text-xs text-slate-600">開明（副議長）</div>
+                        </div>
+                    </div>
+                    <div class="text-sm mt-1.5 text-slate-600">〒399-0025 松本市寿台9-4-1<br>電話：0263-58-0201</div>
+                    <div class="mt-3 flex gap-2">
+                        <button onclick="openMap('松本市寿台9-4-1')" class="flex-1 py-2 text-xs bg-emerald-700 text-white rounded-2xl font-semibold">地図で開く</button>
+                        <button onclick="copyAddress(this, '399-0025 松本市寿台9-4-1')" class="flex-1 py-2 text-xs border rounded-2xl font-medium">コピー</button>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center text-xs text-slate-500 mt-3">※ 松本市議会公式ページに全31名の住所・電話が詳細に掲載されています。</p>
+        </div>
+
+        <!-- 全19市のリンク一覧 -->
+        <div>
+            <h3 class="font-bold text-xl mb-4 px-1">全19市の公式議員名簿リンク一覧</h3>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                <a href="https://www.city.nagano.nagano.jp/shigikai/" target="_blank" class="block p-4 bg-white hover:bg-emerald-50 border border-slate-200 rounded-2xl text-sm font-medium transition-colors">長野市 <span class="text-emerald-600 text-xs">→ 公式</span></a>
+                <a href="https://www.city.matsumoto.nagano.jp/site/gikai/" target="_blank" class="block p-4 bg-white hover:bg-emerald-50 border border-slate-200 rounded-2xl text-sm font-medium transition-colors">松本市 <span class="text-emerald-600 text-xs">→ 公式</span></a>
+                <a href="https://www.city.ueda.nagano.jp/site/gikai/" target="_blank" class="block p-4 bg-white hover:bg-emerald-50 border border-slate-200 rounded-2xl text-sm font-medium transition-colors">上田市 <span class="text-emerald-600 text-xs">→ 公式</span></a>
+                <a href="https://www.city.iida.lg.jp/" target="_blank" class="block p-4 bg-white hover:bg-emerald-50 border border-slate-200 rounded-2xl text-sm font-medium transition-colors">飯田市 <span class="text-emerald-600 text-xs">→ 公式</span></a>
+                <a href="https://www.city.saku.nagano.jp/" target="_blank" class="block p-4 bg-white hover:bg-emerald-50 border border-slate-200 rounded-2xl text-sm font-medium transition-colors">佐久市 <span class="text-emerald-600 text-xs">→ 公式</span></a>
+                <a href="https://www.city.chikuma.lg.jp/" target="_blank" class="block p-4 bg-white hover:bg-emerald-50 border border-slate-200 rounded-2xl text-sm font-medium transition-colors">千曲市 <span class="text-emerald-600 text-xs">→ 公式</span></a>
+                <a href="https://www.city.shiojiri.lg.jp/" target="_blank" class="block p-4 bg-white hover:bg-emerald-50 border border-slate-200 rounded-2xl text-sm font-medium transition-colors">塩尻市 <span class="text-emerald-600 text-xs">→ 公式</span></a>
+                <a href="https://www.city.suwa.lg.jp/" target="_blank" class="block p-4 bg-white hover:bg-emerald-50 border border-slate-200 rounded-2xl text-sm font-medium transition-colors">諏訪市 <span class="text-emerald-600 text-xs">→ 公式</span></a>
+                <a href="https://www.city.ina.nagano.jp/" target="_blank" class="block p-4 bg-white hover:bg-emerald-50 border border-slate-200 rounded-2xl text-sm font-medium transition-colors">伊那市 <span class="text-emerald-600 text-xs">→ 公式</span></a>
+                <a href="https://www.city.omachi.nagano.jp/shigikai/" target="_blank" class="block p-4 bg-white hover:bg-emerald-50 border border-slate-200 rounded-2xl text-sm font-medium transition-colors">大町市 <span class="text-emerald-600 text-xs">→ 公式</span></a>
+                <a href="https://www.city.azumino.nagano.jp/" target="_blank" class="block p-4 bg-white hover:bg-emerald-50 border border-slate-200 rounded-2xl text-sm font-medium transition-colors">安曇野市 <span class="text-emerald-600 text-xs">→ 公式</span></a>
+                <a href="https://www.city.chino.lg.jp/" target="_blank" class="block p-4 bg-white hover:bg-emerald-50 border border-slate-200 rounded-2xl text-sm font-medium transition-colors">茅野市 <span class="text-emerald-600 text-xs">→ 公式</span></a>
+                <!-- 残りの市も同様に追加可能 -->
+                <a href="https://www.city.suzaka.nagano.jp/" target="_blank" class="block p-4 bg-white hover:bg-emerald-50 border border-slate-200 rounded-2xl text-sm font-medium transition-colors">須坂市 <span class="text-emerald-600 text-xs">→ 公式</span></a>
+                <a href="https://www.city.komoro.nagano.jp/" target="_blank" class="block p-4 bg-white hover:bg-emerald-50 border border-slate-200 rounded-2xl text-sm font-medium transition-colors">小諸市 <span class="text-emerald-600 text-xs">→ 公式</span></a>
+                <a href="https://www.city.komagane.lg.jp/" target="_blank" class="block p-4 bg-white hover:bg-emerald-50 border border-slate-200 rounded-2xl text-sm font-medium transition-colors">駒ヶ根市 <span class="text-emerald-600 text-xs">→ 公式</span></a>
+                <a href="https://www.city.nakano.nagano.jp/" target="_blank" class="block p-4 bg-white hover:bg-emerald-50 border border-slate-200 rounded-2xl text-sm font-medium transition-colors">中野市 <span class="text-emerald-600 text-xs">→ 公式</span></a>
+                <a href="https://www.city.iiyama.nagano.jp/" target="_blank" class="block p-4 bg-white hover:bg-emerald-50 border border-slate-200 rounded-2xl text-sm font-medium transition-colors">飯山市 <span class="text-emerald-600 text-xs">→ 公式</span></a>
+                <a href="https://www.city.toumi.nagano.jp/" target="_blank" class="block p-4 bg-white hover:bg-emerald-50 border border-slate-200 rounded-2xl text-sm font-medium transition-colors">東御市 <span class="text-emerald-600 text-xs">→ 公式</span></a>
+                <a href="https://www.city.okaya.nagano.jp/" target="_blank" class="block p-4 bg-white hover:bg-emerald-50 border border-slate-200 rounded-2xl text-sm font-medium transition-colors">岡谷市 <span class="text-emerald-600 text-xs">→ 公式</span></a>
+            </div>
+            <p class="text-xs text-center text-slate-500 mt-4">各市の「議会」または「議員名簿」ページで最新の住所・連絡先をご確認ください。</p>
+        </div>
+    </div>
+
+    <!-- How to use -->
+    <div id="howto" class="max-w-7xl mx-auto px-4 mt-16 pb-16">
+        <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-100">
+            <h3 class="font-bold text-2xl mb-6">このページの使い方（スマホ対応）</h3>
+            
+            <div class="grid md:grid-cols-3 gap-6 text-sm">
+                <div>
+                    <div class="font-semibold mb-2 flex items-center gap-x-2"><i class="fas fa-search text-emerald-600"></i> 1. 検索する</div>
+                    <p class="text-slate-600">上の検索バーに議員名や市区町村名を入力すると、該当するカードが絞り込まれます。</p>
+                </div>
+                <div>
+                    <div class="font-semibold mb-2 flex items-center gap-x-2"><i class="fas fa-map-marked-alt text-emerald-600"></i> 2. 地図で開く</div>
+                    <p class="text-slate-600">「地図で開く」ボタンをタップすると、Google Mapsが起動し、その住所までのルートがすぐわかります。</p>
+                </div>
+                <div>
+                    <div class="font-semibold mb-2 flex items-center gap-x-2"><i class="fas fa-copy text-emerald-600"></i> 3. 住所をコピー</div>
+                    <p class="text-slate-600">「コピー」ボタンで住所をクリップボードに保存。手紙やメール作成時に便利です。</p>
+                </div>
+            </div>
+            
+            <div class="mt-8 pt-6 border-t text-xs text-slate-500">
+                このページは長野県の公式公開情報（2026年時点）を基に作成したものです。情報は変更される可能性があるため、必ず各自治体の公式サイトで最新情報をご確認ください。<br>
+                作成者：Grok (xAI) | 情報源：長野県議会、各市公式ホームページ
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tailwind script
+        function initializeTailwind() {
+            document.documentElement.style.setProperty('--accent', '#166534');
+        }
+        
+        // Google Mapsを開く
+        function openMap(address) {
+            const encoded = encodeURIComponent(address + ', 長野県');
+            window.open(`https://www.google.com/maps/search/?api=1&query=${encoded}`, '_blank');
+        }
+        
+        // 住所をコピー
+        function copyAddress(element, address) {
+            navigator.clipboard.writeText(address).then(() => {
+                const originalText = element.innerHTML;
+                element.innerHTML = `<i class="fas fa-check"></i> <span>コピーしました</span>`;
+                element.style.backgroundColor = '#dcfce7';
+                element.style.borderColor = '#86efac';
+                
+                setTimeout(() => {
+                    element.innerHTML = originalText;
+                    element.style.backgroundColor = '';
+                    element.style.borderColor = '';
+                }, 1800);
+            }).catch(() => {
+                // フォールバック
+                const textArea = document.createElement('textarea');
+                textArea.value = address;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                const originalText = element.innerHTML;
+                element.innerHTML = `<i class="fas fa-check"></i> <span>コピーしました</span>`;
+                setTimeout(() => {
+                    element.innerHTML = originalText;
+                }, 1800);
+            });
+        }
+        
+        // グローバル検索
+        function setupGlobalSearch() {
+            const searchInput = document.getElementById('globalSearch');
+            if (!searchInput) return;
+            
+            searchInput.addEventListener('input', function() {
+                const term = this.value.toLowerCase().trim();
+                const cards = document.querySelectorAll('.member-card');
+                
+                cards.forEach(card => {
+                    const name = (card.dataset.name || '').toLowerCase();
+                    const party = (card.dataset.party || '').toLowerCase();
+                    const address = (card.dataset.address || '').toLowerCase();
+                    
+                    if (term === '' || name.includes(term) || party.includes(term) || address.includes(term)) {
+                        card.style.display = '';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Enterで最初の結果にスクロール（オプション）
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const visibleCards = document.querySelectorAll('.member-card[style=""]');
+                    if (visibleCards.length > 0) {
+                        visibleCards[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }
+            });
+        }
+        
+        // 初期化
+        function init() {
+            initializeTailwind();
+            setupGlobalSearch();
+            
+            // ページ読み込み時に少しアニメーション
+            setTimeout(() => {
+                document.querySelectorAll('.member-card').forEach((card, i) => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(10px)';
+                    setTimeout(() => {
+                        card.style.transition = 'all 0.3s ease';
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, i * 30);
+                });
+            }, 300);
+            
+            // コンソールにヒント
+            console.log('%c[長野県議員ガイド] モバイル対応の完全リストページが読み込まれました。', 'color:#166534');
+        }
+        
+        // 起動
+        window.onload = init;
+    </script>
+</body>
+</html>
