@@ -375,7 +375,22 @@
                         <div id="visitSelectedMember" class="text-sm text-slate-500 bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3">
                             下の議員カードから「訪問申告」を押してください。
                         </div>
-                        <textarea id="visitNote" rows="2" maxlength="160" placeholder="メモ（任意）"
+                        <label class="block mt-3">
+                            <span class="text-xs font-bold text-slate-600">訪問日時</span>
+                            <input id="visitAtInput" type="datetime-local"
+                                   class="visit-input mt-1 w-full px-4 py-2.5 border border-slate-200 rounded-2xl text-sm outline-none focus:border-emerald-600">
+                        </label>
+                        <label class="block mt-3">
+                            <span class="text-xs font-bold text-slate-600">どんな会話をしたか</span>
+                            <textarea id="visitConversation" rows="4" maxlength="1200" placeholder="例: 何をお願いしたか、相手の反応、約束したことなど"
+                                      class="mt-1 w-full px-4 py-3 border border-slate-200 rounded-2xl text-sm outline-none focus:border-emerald-600"></textarea>
+                        </label>
+                        <label class="block mt-3">
+                            <span class="text-xs font-bold text-slate-600">次にやること・引き継ぎ</span>
+                            <input id="visitNextAction" type="text" maxlength="300" placeholder="例: 来週もう一度電話 / 資料を送る"
+                                   class="visit-input mt-1 w-full px-4 py-2.5 border border-slate-200 rounded-2xl text-sm outline-none focus:border-emerald-600">
+                        </label>
+                        <textarea id="visitNote" rows="2" maxlength="160" placeholder="短いメモ（任意）"
                                   class="mt-3 w-full px-4 py-3 border border-slate-200 rounded-2xl text-sm outline-none focus:border-emerald-600"></textarea>
                         <button id="visitSubmitButton"
                                 class="visit-button mt-3 w-full px-5 py-3 rounded-2xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold flex items-center justify-center gap-x-2 disabled:bg-slate-300 disabled:cursor-not-allowed">
@@ -1182,6 +1197,21 @@
             });
         }
 
+        function formatDateTimeLocalValue(date = new Date()) {
+            const pad = value => String(value).padStart(2, '0');
+            return [
+                date.getFullYear(),
+                pad(date.getMonth() + 1),
+                pad(date.getDate()),
+            ].join('-') + `T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+        }
+
+        function parseVisitDateTimeLocal(value) {
+            if (!value) return new Date().toISOString();
+            const date = new Date(value);
+            return Number.isNaN(date.getTime()) ? new Date().toISOString() : date.toISOString();
+        }
+
         function ensureVisitMap() {
             const mapEl = visitEl('visitMap');
             if (!mapEl || typeof L === 'undefined') return null;
@@ -1242,8 +1272,10 @@
                 const marker = L.marker([lat, lng]).bindPopup(`
                     <div style="min-width:180px">
                         <div style="font-weight:700;margin-bottom:4px">${escapeHtml(report.memberName)}</div>
-                        <div style="font-size:12px;color:#475569">${escapeHtml(report.displayName)} / ${formatVisitDate(report.reportedAt)}</div>
+                        <div style="font-size:12px;color:#475569">${escapeHtml(report.displayName)} / 訪問 ${formatVisitDate(report.visitAt || report.reportedAt)}</div>
                         <div style="font-size:12px;color:#64748b;margin-top:4px">${escapeHtml(report.address || '')}</div>
+                        ${report.conversation ? `<div style="font-size:12px;margin-top:6px;white-space:pre-wrap"><strong>会話:</strong> ${escapeHtml(report.conversation)}</div>` : ''}
+                        ${report.nextAction ? `<div style="font-size:12px;margin-top:6px"><strong>次:</strong> ${escapeHtml(report.nextAction)}</div>` : ''}
                         ${report.note ? `<div style="font-size:12px;margin-top:6px">${escapeHtml(report.note)}</div>` : ''}
                         <a href="${mapsUrl}" target="_blank" style="display:inline-block;margin-top:8px;color:#047857;font-weight:700;font-size:12px">Google Mapsで開く</a>
                     </div>
@@ -1496,10 +1528,12 @@
                     <div class="flex items-start justify-between gap-3">
                         <div>
                             <div class="font-bold text-slate-900">${escapeHtml(report.memberName)}</div>
-                            <div class="text-xs text-slate-500 mt-0.5">${escapeHtml(report.displayName)} / ${formatVisitDate(report.reportedAt)}</div>
+                            <div class="text-xs text-slate-500 mt-0.5">${escapeHtml(report.displayName)} / 訪問 ${formatVisitDate(report.visitAt || report.reportedAt)}</div>
                         </div>
                         <a href="${mapUrl}" target="_blank" class="text-xs font-bold text-emerald-700 whitespace-nowrap">ピン</a>
                     </div>
+                    ${report.conversation ? `<div class="text-xs text-slate-700 mt-2 whitespace-pre-wrap"><span class="font-bold">会話:</span> ${escapeHtml(report.conversation)}</div>` : ''}
+                    ${report.nextAction ? `<div class="text-xs text-emerald-800 mt-2"><span class="font-bold">次:</span> ${escapeHtml(report.nextAction)}</div>` : ''}
                     ${report.note ? `<div class="text-xs text-slate-600 mt-2">${escapeHtml(report.note)}</div>` : ''}
                 `;
                 list.appendChild(item);
@@ -1549,6 +1583,9 @@
             const groupCode = visitEl('visitGroupCode')?.value.trim();
             const displayName = visitEl('visitDisplayName')?.value.trim();
             const note = visitEl('visitNote')?.value.trim();
+            const conversation = visitEl('visitConversation')?.value.trim();
+            const nextAction = visitEl('visitNextAction')?.value.trim();
+            const visitAt = parseVisitDateTimeLocal(visitEl('visitAtInput')?.value);
             localStorage.setItem(VISIT_GROUP_STORAGE_KEY, groupCode || '');
             localStorage.setItem(VISIT_NAME_STORAGE_KEY, displayName || '');
 
@@ -1586,6 +1623,9 @@
                         lat: visitState.draftPin.lat,
                         lng: visitState.draftPin.lng,
                         accuracyM: visitState.draftPin.accuracyM,
+                        visitAt,
+                        conversation,
+                        nextAction,
                         note,
                     }),
                 });
@@ -1593,6 +1633,9 @@
                 if (!response.ok) throw new Error(data.error || '訪問申告に失敗しました');
 
                 if (visitEl('visitNote')) visitEl('visitNote').value = '';
+                if (visitEl('visitConversation')) visitEl('visitConversation').value = '';
+                if (visitEl('visitNextAction')) visitEl('visitNextAction').value = '';
+                if (visitEl('visitAtInput')) visitEl('visitAtInput').value = formatDateTimeLocalValue();
                 showVisitStatus(`${visitState.selectedMember.memberName} への訪問を申告しました。`, 'success');
                 await refreshVisits();
             } catch (error) {
@@ -1607,8 +1650,10 @@
 
             const groupInput = visitEl('visitGroupCode');
             const nameInput = visitEl('visitDisplayName');
+            const visitAtInput = visitEl('visitAtInput');
             if (groupInput) groupInput.value = localStorage.getItem(VISIT_GROUP_STORAGE_KEY) || '';
             if (nameInput) nameInput.value = localStorage.getItem(VISIT_NAME_STORAGE_KEY) || '';
+            if (visitAtInput && !visitAtInput.value) visitAtInput.value = formatDateTimeLocalValue();
 
             let refreshTimer;
             groupInput?.addEventListener('input', () => {

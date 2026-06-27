@@ -41,10 +41,16 @@ function ensureTable() {
       lat double precision not null,
       lng double precision not null,
       accuracy_m double precision,
+      visit_at timestamptz,
+      conversation text,
+      next_action text,
       note text,
       reported_at timestamptz not null default now()
     )
   `.then(async () => {
+    await sql`alter table nagano_visit_reports add column if not exists visit_at timestamptz`;
+    await sql`alter table nagano_visit_reports add column if not exists conversation text`;
+    await sql`alter table nagano_visit_reports add column if not exists next_action text`;
     await sql`create index if not exists nagano_visit_reports_group_idx on nagano_visit_reports (group_code, reported_at desc)`;
     await sql`create index if not exists nagano_visit_reports_member_idx on nagano_visit_reports (group_code, member_key, reported_at desc)`;
   });
@@ -64,10 +70,30 @@ function cleanString(value, maxLength) {
   return value.trim().replace(/\s+/g, " ").slice(0, maxLength);
 }
 
+function cleanText(value, maxLength) {
+  if (typeof value !== "string") return "";
+  return value
+    .replace(/\r\n/g, "\n")
+    .replace(/\r/g, "\n")
+    .trim()
+    .slice(0, maxLength);
+}
+
 function cleanNumber(value, min, max) {
   const number = Number(value);
   if (!Number.isFinite(number) || number < min || number > max) return null;
   return number;
+}
+
+function cleanDate(value) {
+  if (typeof value !== "string" || !value.trim()) return new Date();
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    const error = new Error("visitAt is invalid");
+    error.statusCode = 400;
+    throw error;
+  }
+  return date;
 }
 
 function normalizeRow(row) {
@@ -81,6 +107,9 @@ function normalizeRow(row) {
     lat: Number(row.lat),
     lng: Number(row.lng),
     accuracyM: row.accuracy_m == null ? null : Number(row.accuracy_m),
+    visitAt: row.visit_at ?? row.reported_at,
+    conversation: row.conversation,
+    nextAction: row.next_action,
     note: row.note,
     reportedAt: row.reported_at,
   };
@@ -99,7 +128,7 @@ function buildStats(rows) {
     totalReports: rows.length,
     uniqueVisitors: visitorTokens.size,
     visitedMembers: Object.keys(memberCounts).length,
-    latestReportedAt: rows[0]?.reported_at ?? null,
+    latestReportedAt: rows[0]?.visit_at ?? rows[0]?.reported_at ?? null,
     memberCounts,
   };
 }
@@ -135,7 +164,7 @@ async function handleGet(req, res) {
     select *
     from nagano_visit_reports
     where group_code = ${groupCode}
-    order by reported_at desc
+    order by coalesce(visit_at, reported_at) desc, reported_at desc
     limit 300
   `;
 
@@ -154,7 +183,10 @@ async function handlePost(req, res) {
   const address = cleanString(body.address, 240);
   const displayName = cleanString(body.displayName, 60);
   const visitorToken = cleanString(body.visitorToken, 80);
-  const note = cleanString(body.note, 160);
+  const note = cleanText(body.note, 160);
+  const conversation = cleanText(body.conversation, 1200);
+  const nextAction = cleanString(body.nextAction, 300);
+  const visitAt = cleanDate(body.visitAt);
   const lat = cleanNumber(body.lat, -90, 90);
   const lng = cleanNumber(body.lng, -180, 180);
   const accuracyM = body.accuracyM == null ? null : cleanNumber(body.accuracyM, 0, 50000);
@@ -186,6 +218,9 @@ async function handlePost(req, res) {
       lat,
       lng,
       accuracy_m,
+      visit_at,
+      conversation,
+      next_action,
       note
     )
     values (
@@ -198,6 +233,9 @@ async function handlePost(req, res) {
       ${lat},
       ${lng},
       ${accuracyM},
+      ${visitAt},
+      ${conversation || null},
+      ${nextAction || null},
       ${note || null}
     )
     returning *
