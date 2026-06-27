@@ -11,27 +11,36 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
     steps:
+      - name: Skip until Vercel token is configured
+        if: env.VERCEL_TOKEN == ''
+        run: |
+          echo "::notice::VERCEL_TOKEN secret is not configured yet. Add it, then rerun this workflow."
+
       - name: Checkout
+        if: env.VERCEL_TOKEN != ''
         uses: actions/checkout@v4
 
       - name: Setup Node
+        if: env.VERCEL_TOKEN != ''
         uses: actions/setup-node@v4
         with:
           node-version: 22
 
       - name: Install Vercel CLI
+        if: env.VERCEL_TOKEN != ''
         run: npm install --global vercel@latest
 
       - name: Link Vercel project
+        if: env.VERCEL_TOKEN != ''
         run: |
           mkdir -p .vercel
           printf '{"orgId":"%s","projectId":"%s"}\n' "$VERCEL_ORG_ID" "$VERCEL_PROJECT_ID" > .vercel/project.json
-        env:
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
       - name: Deploy production
+        if: env.VERCEL_TOKEN != ''
         run: vercel deploy --prod --yes --token "$VERCEL_TOKEN"
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
