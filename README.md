@@ -2,6 +2,14 @@
 
 静的HTMLサイトです。Vercelでそのまま配信できます。
 
+## 訪問申告機能
+
+`/api/visits` の Vercel Function と PostgreSQL を使って、グループコード内だけで訪問申告を共有します。
+
+- `DATABASE_URL`: PostgreSQL 接続URL。Production 環境変数に設定してください。
+- テーブル `nagano_visit_reports` は API 初回実行時に自動作成されます。
+- フロント側ではグループコード、表示名、ピン位置を入力して、各議員カードの「訪問申告」から記録します。
+
 ## Vercel Token Deploy
 
 GitHub ActionsからVercelへデプロイするため、GitHub repository secrets に以下を設定します。

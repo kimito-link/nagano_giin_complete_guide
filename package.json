@@ -1,0 +1,15 @@
+{
+  "name": "nagano_giin_complete_guide",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "check": "node --check api/visits.js",
+    "serve": "npx serve ."
+  },
+  "dependencies": {
+    "postgres": "^3.4.7"
+  },
+  "devDependencies": {
+    "serve": "^14.2.5"
+  }
+}

@@ -94,6 +94,46 @@
             background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%);
             border: 1px solid #fde047;
         }
+
+        .visit-panel {
+            background: linear-gradient(135deg, #ecfdf5 0%, #f8fafc 100%);
+        }
+
+        .visit-input {
+            min-height: 44px;
+        }
+
+        .visit-button {
+            min-height: 44px;
+        }
+
+        .visit-status {
+            display: none;
+        }
+
+        .visit-status.is-visible {
+            display: flex;
+        }
+
+        .visit-card-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            border-radius: 9999px;
+            background: #ecfdf5;
+            color: #047857;
+            border: 1px solid #a7f3d0;
+            padding: 0.25rem 0.65rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-top: 0.5rem;
+        }
+
+        .visit-card-badge.is-empty {
+            background: #f8fafc;
+            color: #64748b;
+            border-color: #e2e8f0;
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800">
@@ -114,6 +154,7 @@
                 <div class="hidden md:flex items-center gap-x-8 text-sm font-medium">
                     <a href="#prefectural" class="hover:text-emerald-700 transition-colors">県議会</a>
                     <a href="#municipal" class="hover:text-emerald-700 transition-colors">市議会</a>
+                    <a href="#visits" class="hover:text-emerald-700 transition-colors">訪問申告</a>
                     <a href="#howto" class="hover:text-emerald-700 transition-colors">使い方</a>
                 </div>
                 
@@ -154,6 +195,11 @@
                        class="inline-flex items-center justify-center gap-x-2 border border-white/40 hover:bg-white/10 font-semibold px-8 h-12 rounded-2xl transition-all">
                         <span>市議会も見る</span>
                     </a>
+                    <a href="#visits"
+                       class="inline-flex items-center justify-center gap-x-2 bg-emerald-500 hover:bg-emerald-400 text-emerald-950 font-semibold px-8 h-12 rounded-2xl transition-all active:scale-[0.985]">
+                        <i class="fas fa-location-dot"></i>
+                        <span>訪問を申告する</span>
+                    </a>
                 </div>
             </div>
         </div>
@@ -189,6 +235,108 @@
             <i class="fas fa-search absolute left-5 top-4 text-slate-400"></i>
         </div>
         <p class="text-xs text-slate-500 mt-2 ml-1">※ 名前や住所の一部で絞り込めます</p>
+    </div>
+
+    <!-- Visit Reporting -->
+    <div id="visits" class="max-w-7xl mx-auto px-4 mt-8">
+        <div class="visit-panel rounded-3xl p-6 md:p-8 shadow-sm border border-emerald-100">
+            <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
+                <div class="max-w-2xl">
+                    <div class="inline-flex items-center gap-x-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold mb-3">
+                        <i class="fas fa-location-dot"></i>
+                        <span>グループ内の訪問申告</span>
+                    </div>
+                    <h2 class="text-2xl md:text-3xl font-bold tracking-tight text-slate-900">訪問した場所をピンで残す</h2>
+                    <p class="text-sm text-slate-600 mt-2 leading-6">
+                        同じグループコードを知っている人だけで、訪問済みの議員カードとピン位置を共有できます。SNS投稿は不要です。
+                    </p>
+                </div>
+                <div class="grid grid-cols-3 gap-3 text-center min-w-[260px]">
+                    <div class="bg-white rounded-2xl border border-emerald-100 p-3">
+                        <div id="visitTotalReports" class="text-2xl font-bold text-emerald-800">0</div>
+                        <div class="text-[11px] text-slate-500 font-semibold">申告</div>
+                    </div>
+                    <div class="bg-white rounded-2xl border border-emerald-100 p-3">
+                        <div id="visitVisitedMembers" class="text-2xl font-bold text-emerald-800">0</div>
+                        <div class="text-[11px] text-slate-500 font-semibold">訪問先</div>
+                    </div>
+                    <div class="bg-white rounded-2xl border border-emerald-100 p-3">
+                        <div id="visitUniqueVisitors" class="text-2xl font-bold text-emerald-800">0</div>
+                        <div class="text-[11px] text-slate-500 font-semibold">参加者</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid lg:grid-cols-[1.1fr_0.9fr] gap-6 mt-6">
+                <div class="bg-white rounded-3xl border border-slate-200 p-5">
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <label class="block">
+                            <span class="text-xs font-bold text-slate-600">グループコード</span>
+                            <input id="visitGroupCode" type="text" placeholder="例: nagano-team"
+                                   class="visit-input mt-1 w-full px-4 py-2.5 border border-slate-200 rounded-2xl text-sm outline-none focus:border-emerald-600">
+                        </label>
+                        <label class="block">
+                            <span class="text-xs font-bold text-slate-600">表示名</span>
+                            <input id="visitDisplayName" type="text" placeholder="例: 佐藤"
+                                   class="visit-input mt-1 w-full px-4 py-2.5 border border-slate-200 rounded-2xl text-sm outline-none focus:border-emerald-600">
+                        </label>
+                    </div>
+
+                    <div class="mt-4 border-t border-slate-100 pt-4">
+                        <div class="flex items-center justify-between gap-3 mb-3">
+                            <div>
+                                <div class="text-sm font-bold text-slate-900">申告するピン</div>
+                                <div class="text-xs text-slate-500">現在地、または座標/Google Maps URLから設定します。</div>
+                            </div>
+                            <button id="visitCurrentPinButton"
+                                    class="visit-button px-4 py-2.5 rounded-2xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold flex items-center gap-x-2">
+                                <i class="fas fa-location-crosshairs"></i>
+                                <span>現在地をピン</span>
+                            </button>
+                        </div>
+                        <div class="flex flex-col md:flex-row gap-2">
+                            <input id="visitCoordinateInput" type="text" placeholder="35.681236, 139.767125 または Google Maps URL"
+                                   class="visit-input flex-1 px-4 py-2.5 border border-slate-200 rounded-2xl text-sm outline-none focus:border-emerald-600">
+                            <button id="visitCoordinateButton"
+                                    class="visit-button px-4 py-2.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold flex items-center justify-center gap-x-2">
+                                <i class="fas fa-map-pin"></i>
+                                <span>座標からピン</span>
+                            </button>
+                        </div>
+                        <div id="visitPinPreview" class="mt-3 text-xs text-slate-500 bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3">
+                            ピン未設定です。訪問申告前にピンを設定してください。
+                        </div>
+                    </div>
+
+                    <div class="mt-4 border-t border-slate-100 pt-4">
+                        <div class="text-xs font-bold text-slate-600 mb-1">選択中の訪問先</div>
+                        <div id="visitSelectedMember" class="text-sm text-slate-500 bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3">
+                            下の議員カードから「訪問申告」を押してください。
+                        </div>
+                        <textarea id="visitNote" rows="2" maxlength="160" placeholder="メモ（任意）"
+                                  class="mt-3 w-full px-4 py-3 border border-slate-200 rounded-2xl text-sm outline-none focus:border-emerald-600"></textarea>
+                        <button id="visitSubmitButton"
+                                class="visit-button mt-3 w-full px-5 py-3 rounded-2xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold flex items-center justify-center gap-x-2 disabled:bg-slate-300 disabled:cursor-not-allowed">
+                            <i class="fas fa-check-circle"></i>
+                            <span>この訪問を申告</span>
+                        </button>
+                        <div id="visitStatus" class="visit-status mt-3 items-center gap-x-2 text-sm rounded-2xl px-4 py-3"></div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-3xl border border-slate-200 p-5">
+                    <div class="flex items-center justify-between gap-3 mb-3">
+                        <h3 class="font-bold text-lg text-slate-900">最近の訪問</h3>
+                        <button id="visitRefreshButton" class="text-xs font-bold text-emerald-700 hover:text-emerald-900">
+                            <i class="fas fa-rotate-right"></i> 更新
+                        </button>
+                    </div>
+                    <div id="visitRecentList" class="space-y-3 text-sm text-slate-600">
+                        グループコードを入力すると、ここに訪問履歴が表示されます。
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- ========== 県議会セクション ========== -->
@@ -838,7 +986,7 @@
         <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-100">
             <h3 class="font-bold text-2xl mb-6">このページの使い方（スマホ対応）</h3>
             
-            <div class="grid md:grid-cols-3 gap-6 text-sm">
+            <div class="grid md:grid-cols-4 gap-6 text-sm">
                 <div>
                     <div class="font-semibold mb-2 flex items-center gap-x-2"><i class="fas fa-search text-emerald-600"></i> 1. 検索する</div>
                     <p class="text-slate-600">上の検索バーに議員名や市区町村名を入力すると、該当するカードが絞り込まれます。</p>
@@ -850,6 +998,10 @@
                 <div>
                     <div class="font-semibold mb-2 flex items-center gap-x-2"><i class="fas fa-copy text-emerald-600"></i> 3. 住所をコピー</div>
                     <p class="text-slate-600">「コピー」ボタンで住所をクリップボードに保存。手紙やメール作成時に便利です。</p>
+                </div>
+                <div>
+                    <div class="font-semibold mb-2 flex items-center gap-x-2"><i class="fas fa-location-dot text-emerald-600"></i> 4. 訪問を申告</div>
+                    <p class="text-slate-600">グループコードとピンを設定し、カードの「訪問申告」からグループ内だけで訪問済みを共有できます。</p>
                 </div>
             </div>
             
@@ -864,6 +1016,415 @@
         // Tailwind script
         function initializeTailwind() {
             document.documentElement.style.setProperty('--accent', '#166534');
+        }
+
+        const VISIT_GROUP_STORAGE_KEY = 'naganoVisit.groupCode';
+        const VISIT_NAME_STORAGE_KEY = 'naganoVisit.displayName';
+        const VISIT_TOKEN_STORAGE_KEY = 'naganoVisit.visitorToken';
+
+        const visitState = {
+            isLoading: false,
+            selectedMember: null,
+            draftPin: null,
+            reports: [],
+            stats: {
+                totalReports: 0,
+                uniqueVisitors: 0,
+                visitedMembers: 0,
+                memberCounts: {},
+                latestReportedAt: null,
+            },
+        };
+
+        function visitEl(id) {
+            return document.getElementById(id);
+        }
+
+        function escapeHtml(value) {
+            return String(value ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function formatVisitDate(value) {
+            if (!value) return '-';
+            return new Date(value).toLocaleString('ja-JP', {
+                month: 'numeric',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+            });
+        }
+
+        function formatCoordinate(pin) {
+            return `${pin.lat.toFixed(6)}, ${pin.lng.toFixed(6)}`;
+        }
+
+        function randomVisitToken() {
+            const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            const bytes = new Uint8Array(24);
+            if (window.crypto?.getRandomValues) {
+                window.crypto.getRandomValues(bytes);
+            } else {
+                for (let i = 0; i < bytes.length; i++) bytes[i] = Math.floor(Math.random() * 256);
+            }
+            return Array.from(bytes, byte => chars[byte % chars.length]).join('');
+        }
+
+        function getVisitToken() {
+            let token = localStorage.getItem(VISIT_TOKEN_STORAGE_KEY);
+            if (!token) {
+                token = randomVisitToken();
+                localStorage.setItem(VISIT_TOKEN_STORAGE_KEY, token);
+            }
+            return token;
+        }
+
+        function simpleMemberKey(name, address) {
+            return `${name.trim()}::${address.trim()}`.slice(0, 220);
+        }
+
+        function parseCoordinateInput(input) {
+            const decoded = (() => {
+                try {
+                    return decodeURIComponent(String(input || '').trim());
+                } catch {
+                    return String(input || '').trim();
+                }
+            })().replace(/\+/g, ' ');
+
+            if (!decoded) return null;
+
+            const number = '([+-]?(?:\\d+(?:\\.\\d+)?|\\.\\d+))';
+            const pair = `${number}\\s*,\\s*${number}`;
+            const patterns = [
+                new RegExp(`@${pair}`),
+                new RegExp(`[?&](?:q|query|ll)=${pair}`),
+                new RegExp(pair),
+            ];
+
+            for (const pattern of patterns) {
+                const match = decoded.match(pattern);
+                if (!match) continue;
+                const lat = Number(match[1]);
+                const lng = Number(match[2]);
+                if (
+                    Number.isFinite(lat) &&
+                    Number.isFinite(lng) &&
+                    lat >= -90 &&
+                    lat <= 90 &&
+                    lng >= -180 &&
+                    lng <= 180
+                ) {
+                    return { lat, lng, accuracyM: null };
+                }
+            }
+
+            return null;
+        }
+
+        function showVisitStatus(message, type = 'info') {
+            const status = visitEl('visitStatus');
+            if (!status) return;
+
+            const styles = {
+                info: 'visit-status is-visible bg-slate-50 border border-slate-200 text-slate-700',
+                success: 'visit-status is-visible bg-emerald-50 border border-emerald-200 text-emerald-800',
+                error: 'visit-status is-visible bg-red-50 border border-red-200 text-red-700',
+            };
+
+            status.className = styles[type] || styles.info;
+            status.innerHTML = '';
+            const icon = document.createElement('i');
+            icon.className = type === 'error' ? 'fas fa-triangle-exclamation' : 'fas fa-circle-info';
+            const text = document.createElement('span');
+            text.textContent = message;
+            status.append(icon, text);
+        }
+
+        function setVisitLoading(isLoading) {
+            visitState.isLoading = isLoading;
+            ['visitSubmitButton', 'visitRefreshButton', 'visitCurrentPinButton', 'visitCoordinateButton'].forEach(id => {
+                const button = visitEl(id);
+                if (button) button.disabled = isLoading;
+            });
+            syncVisitSubmitState();
+        }
+
+        function syncVisitSubmitState() {
+            const button = visitEl('visitSubmitButton');
+            if (!button) return;
+            const groupCode = visitEl('visitGroupCode')?.value.trim();
+            const displayName = visitEl('visitDisplayName')?.value.trim();
+            button.disabled = visitState.isLoading || !groupCode || !displayName || !visitState.selectedMember || !visitState.draftPin;
+        }
+
+        function setDraftPin(pin, sourceLabel) {
+            visitState.draftPin = pin;
+            const coordinateInput = visitEl('visitCoordinateInput');
+            const preview = visitEl('visitPinPreview');
+            if (coordinateInput) coordinateInput.value = formatCoordinate(pin);
+            if (preview) {
+                const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(formatCoordinate(pin))}`;
+                preview.innerHTML = `
+                    <div class="font-bold text-emerald-800">ピン設定済み: ${escapeHtml(formatCoordinate(pin))}</div>
+                    <div class="mt-1">方法: ${escapeHtml(sourceLabel)}${pin.accuracyM ? ` / 精度 ±${Math.round(pin.accuracyM)}m` : ''}</div>
+                    <a href="${mapUrl}" target="_blank" class="inline-flex items-center gap-x-1 mt-2 font-bold text-emerald-700 hover:text-emerald-900">
+                        <i class="fas fa-up-right-from-square"></i><span>Google Mapsでピン確認</span>
+                    </a>
+                `;
+            }
+            syncVisitSubmitState();
+            showVisitStatus('ピンをセットしました。カードを選んで訪問申告できます。', 'success');
+        }
+
+        function setCurrentVisitPin() {
+            if (!navigator.geolocation) {
+                showVisitStatus('この端末では現在地を取得できません。座標またはGoogle Maps URLを入力してください。', 'error');
+                return;
+            }
+
+            showVisitStatus('現在地を取得しています...', 'info');
+            navigator.geolocation.getCurrentPosition(
+                pos => {
+                    setDraftPin({
+                        lat: pos.coords.latitude,
+                        lng: pos.coords.longitude,
+                        accuracyM: pos.coords.accuracy ?? null,
+                    }, '現在地');
+                },
+                () => showVisitStatus('位置情報の許可が必要です。許可できない場合は座標を入力してください。', 'error'),
+                { enableHighAccuracy: true, timeout: 15000, maximumAge: 30000 },
+            );
+        }
+
+        function setCoordinateVisitPin() {
+            const parsed = parseCoordinateInput(visitEl('visitCoordinateInput')?.value);
+            if (!parsed) {
+                showVisitStatus('緯度経度、またはGoogle Maps URLを入力してください。', 'error');
+                return;
+            }
+            setDraftPin(parsed, '座標入力');
+        }
+
+        function selectVisitMember(card) {
+            const name = card.dataset.name || '訪問先';
+            const address = card.dataset.address || '';
+            const memberKey = card.dataset.memberKey || simpleMemberKey(name, address);
+            visitState.selectedMember = { memberKey, memberName: name, address };
+
+            const selected = visitEl('visitSelectedMember');
+            if (selected) {
+                selected.innerHTML = `
+                    <div class="font-bold text-slate-900">${escapeHtml(name)}</div>
+                    <div class="text-xs text-slate-500 mt-1">${escapeHtml(address)}</div>
+                `;
+            }
+
+            syncVisitSubmitState();
+            document.getElementById('visits')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            showVisitStatus(`${name} を訪問先に選択しました。`, 'success');
+        }
+
+        function setupVisitCardControls() {
+            document.querySelectorAll('.member-card').forEach(card => {
+                if (card.dataset.visitReady === 'true') return;
+
+                const name = card.dataset.name || '';
+                const address = card.dataset.address || '';
+                if (!name || !address) return;
+
+                card.dataset.memberKey = simpleMemberKey(name, address);
+
+                const badge = document.createElement('div');
+                badge.className = 'visit-card-badge is-empty';
+                badge.dataset.visitBadge = 'true';
+                badge.innerHTML = '<i class="fas fa-location-dot"></i><span>訪問 0件</span>';
+
+                const infoBlock = card.firstElementChild;
+                if (infoBlock) infoBlock.appendChild(badge);
+
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'visit-button px-4 py-2 border border-emerald-200 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-bold rounded-2xl flex items-center justify-center gap-x-1.5';
+                button.innerHTML = '<i class="fas fa-location-dot"></i><span>訪問申告</span>';
+                button.addEventListener('click', () => selectVisitMember(card));
+
+                const mapButton = card.querySelector('button[onclick^="openMap"]');
+                const actionRow = mapButton?.parentElement || card;
+                actionRow.appendChild(button);
+                card.dataset.visitReady = 'true';
+            });
+        }
+
+        function renderVisitCards() {
+            const counts = visitState.stats.memberCounts || {};
+            document.querySelectorAll('.member-card').forEach(card => {
+                const badge = card.querySelector('[data-visit-badge="true"]');
+                if (!badge) return;
+
+                const count = counts[card.dataset.memberKey] || 0;
+                badge.classList.toggle('is-empty', count === 0);
+                badge.innerHTML = count > 0
+                    ? `<i class="fas fa-check-circle"></i><span>訪問 ${count}件</span>`
+                    : '<i class="fas fa-location-dot"></i><span>訪問 0件</span>';
+            });
+        }
+
+        function renderVisitSummary() {
+            visitEl('visitTotalReports').textContent = visitState.stats.totalReports || 0;
+            visitEl('visitVisitedMembers').textContent = visitState.stats.visitedMembers || 0;
+            visitEl('visitUniqueVisitors').textContent = visitState.stats.uniqueVisitors || 0;
+
+            const list = visitEl('visitRecentList');
+            if (!list) return;
+
+            if (!visitState.reports.length) {
+                list.innerHTML = '<div class="text-slate-500 bg-slate-50 border border-slate-200 rounded-2xl p-4">まだ訪問申告はありません。</div>';
+                return;
+            }
+
+            list.innerHTML = '';
+            visitState.reports.slice(0, 8).forEach(report => {
+                const item = document.createElement('div');
+                item.className = 'rounded-2xl border border-slate-200 p-3';
+                const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${report.lat},${report.lng}`)}`;
+                item.innerHTML = `
+                    <div class="flex items-start justify-between gap-3">
+                        <div>
+                            <div class="font-bold text-slate-900">${escapeHtml(report.memberName)}</div>
+                            <div class="text-xs text-slate-500 mt-0.5">${escapeHtml(report.displayName)} / ${formatVisitDate(report.reportedAt)}</div>
+                        </div>
+                        <a href="${mapUrl}" target="_blank" class="text-xs font-bold text-emerald-700 whitespace-nowrap">ピン</a>
+                    </div>
+                    ${report.note ? `<div class="text-xs text-slate-600 mt-2">${escapeHtml(report.note)}</div>` : ''}
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        async function refreshVisits() {
+            const groupCode = visitEl('visitGroupCode')?.value.trim();
+            localStorage.setItem(VISIT_GROUP_STORAGE_KEY, groupCode || '');
+
+            if (!groupCode || groupCode.length < 2) {
+                visitState.reports = [];
+                visitState.stats = {
+                    totalReports: 0,
+                    uniqueVisitors: 0,
+                    visitedMembers: 0,
+                    memberCounts: {},
+                    latestReportedAt: null,
+                };
+                renderVisitSummary();
+                renderVisitCards();
+                syncVisitSubmitState();
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/visits?groupCode=${encodeURIComponent(groupCode)}`, {
+                    headers: { Accept: 'application/json' },
+                });
+                const data = await response.json();
+                if (!response.ok) throw new Error(data.error || '訪問履歴を取得できませんでした');
+
+                visitState.reports = data.reports || [];
+                visitState.stats = data.stats || visitState.stats;
+                renderVisitSummary();
+                renderVisitCards();
+            } catch (error) {
+                showVisitStatus(error.message || '訪問履歴の取得に失敗しました。', 'error');
+            } finally {
+                syncVisitSubmitState();
+            }
+        }
+
+        async function submitVisitReport() {
+            const groupCode = visitEl('visitGroupCode')?.value.trim();
+            const displayName = visitEl('visitDisplayName')?.value.trim();
+            const note = visitEl('visitNote')?.value.trim();
+            localStorage.setItem(VISIT_GROUP_STORAGE_KEY, groupCode || '');
+            localStorage.setItem(VISIT_NAME_STORAGE_KEY, displayName || '');
+
+            if (!groupCode || groupCode.length < 2) {
+                showVisitStatus('グループコードを入力してください。', 'error');
+                return;
+            }
+            if (!displayName) {
+                showVisitStatus('表示名を入力してください。', 'error');
+                return;
+            }
+            if (!visitState.selectedMember) {
+                showVisitStatus('訪問先の議員カードを選択してください。', 'error');
+                return;
+            }
+            if (!visitState.draftPin) {
+                showVisitStatus('申告するピンをセットしてください。', 'error');
+                return;
+            }
+
+            setVisitLoading(true);
+            showVisitStatus('訪問を申告しています...', 'info');
+
+            try {
+                const response = await fetch('/api/visits', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+                    body: JSON.stringify({
+                        groupCode,
+                        displayName,
+                        visitorToken: getVisitToken(),
+                        memberKey: visitState.selectedMember.memberKey,
+                        memberName: visitState.selectedMember.memberName,
+                        address: visitState.selectedMember.address,
+                        lat: visitState.draftPin.lat,
+                        lng: visitState.draftPin.lng,
+                        accuracyM: visitState.draftPin.accuracyM,
+                        note,
+                    }),
+                });
+                const data = await response.json();
+                if (!response.ok) throw new Error(data.error || '訪問申告に失敗しました');
+
+                if (visitEl('visitNote')) visitEl('visitNote').value = '';
+                showVisitStatus(`${visitState.selectedMember.memberName} への訪問を申告しました。`, 'success');
+                await refreshVisits();
+            } catch (error) {
+                showVisitStatus(error.message || '訪問申告に失敗しました。', 'error');
+            } finally {
+                setVisitLoading(false);
+            }
+        }
+
+        function setupVisitFeature() {
+            setupVisitCardControls();
+
+            const groupInput = visitEl('visitGroupCode');
+            const nameInput = visitEl('visitDisplayName');
+            if (groupInput) groupInput.value = localStorage.getItem(VISIT_GROUP_STORAGE_KEY) || '';
+            if (nameInput) nameInput.value = localStorage.getItem(VISIT_NAME_STORAGE_KEY) || '';
+
+            let refreshTimer;
+            groupInput?.addEventListener('input', () => {
+                clearTimeout(refreshTimer);
+                refreshTimer = setTimeout(refreshVisits, 350);
+                syncVisitSubmitState();
+            });
+            nameInput?.addEventListener('input', () => {
+                localStorage.setItem(VISIT_NAME_STORAGE_KEY, nameInput.value.trim());
+                syncVisitSubmitState();
+            });
+            visitEl('visitCurrentPinButton')?.addEventListener('click', setCurrentVisitPin);
+            visitEl('visitCoordinateButton')?.addEventListener('click', setCoordinateVisitPin);
+            visitEl('visitSubmitButton')?.addEventListener('click', submitVisitReport);
+            visitEl('visitRefreshButton')?.addEventListener('click', refreshVisits);
+
+            syncVisitSubmitState();
+            refreshVisits();
         }
         
         // Google Mapsを開く
@@ -939,6 +1500,7 @@
         function init() {
             initializeTailwind();
             setupGlobalSearch();
+            setupVisitFeature();
             
             // ページ読み込み時に少しアニメーション
             setTimeout(() => {
