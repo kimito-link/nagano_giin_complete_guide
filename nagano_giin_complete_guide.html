@@ -6,6 +6,7 @@
     <title>長野県議員訪問ガイド | 公的連絡先完全リスト</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&amp;family=Inter:wght@400;500;600&amp;display=swap');
         
@@ -134,14 +135,32 @@
             color: #64748b;
             border-color: #e2e8f0;
         }
+
+        .visit-map {
+            min-height: 360px;
+            height: 46vh;
+            max-height: 560px;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            border: 1px solid #d1fae5;
+            background: #f8fafc;
+        }
+
+        .visit-map-empty {
+            min-height: 360px;
+        }
+
+        .leaflet-container {
+            font-family: 'Noto Sans JP', 'Inter', system_ui, sans-serif;
+        }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800">
+<body id="top" class="bg-slate-50 text-slate-800">
     <!-- Navbar -->
     <nav class="bg-white border-b sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex items-center justify-between h-16">
-                <div class="flex items-center gap-x-3">
+                <a href="#top" class="flex items-center gap-x-3 hover:opacity-90 transition-opacity" aria-label="ページ先頭へ戻る">
                     <div class="w-10 h-10 bg-emerald-800 rounded-xl flex items-center justify-center">
                         <i class="fas fa-landmark text-white text-2xl"></i>
                     </div>
@@ -149,16 +168,21 @@
                         <span class="font-bold text-2xl tracking-tight text-emerald-900">長野県議員ガイド</span>
                         <span class="text-xs text-emerald-600 block -mt-1">公的連絡先完全リスト</span>
                     </div>
-                </div>
+                </a>
                 
                 <div class="hidden md:flex items-center gap-x-8 text-sm font-medium">
+                    <a href="#top" class="hover:text-emerald-700 transition-colors">TOP</a>
                     <a href="#prefectural" class="hover:text-emerald-700 transition-colors">県議会</a>
                     <a href="#municipal" class="hover:text-emerald-700 transition-colors">市議会</a>
                     <a href="#visits" class="hover:text-emerald-700 transition-colors">訪問申告</a>
+                    <a href="#visit-map-section" class="hover:text-emerald-700 transition-colors">訪問マップ</a>
                     <a href="#howto" class="hover:text-emerald-700 transition-colors">使い方</a>
                 </div>
                 
                 <div class="flex items-center gap-x-2">
+                    <a href="#top" class="px-3 py-1.5 border border-emerald-200 text-emerald-800 rounded-full text-xs font-bold hover:bg-emerald-50">
+                        TOP
+                    </a>
                     <div class="px-3 py-1.5 bg-emerald-100 text-emerald-800 rounded-full text-xs font-semibold flex items-center gap-x-1">
                         <i class="fas fa-check-circle"></i>
                         <span>2026年最新公開情報</span>
@@ -267,6 +291,30 @@
                 </div>
             </div>
 
+            <div class="grid md:grid-cols-3 gap-3 mt-6">
+                <div class="bg-white border border-emerald-100 rounded-2xl p-4 flex gap-3">
+                    <div class="w-9 h-9 rounded-full bg-emerald-700 text-white flex items-center justify-center font-bold flex-shrink-0">1</div>
+                    <div>
+                        <div class="font-bold text-slate-900">グループコードを入れる</div>
+                        <p class="text-xs text-slate-500 mt-1">仲間内で同じ言葉を使います。例: nagano-team</p>
+                    </div>
+                </div>
+                <div class="bg-white border border-emerald-100 rounded-2xl p-4 flex gap-3">
+                    <div class="w-9 h-9 rounded-full bg-emerald-700 text-white flex items-center justify-center font-bold flex-shrink-0">2</div>
+                    <div>
+                        <div class="font-bold text-slate-900">ピンをセットする</div>
+                        <p class="text-xs text-slate-500 mt-1">「現在地をピン」か、Google MapsのURLを貼り付けます。</p>
+                    </div>
+                </div>
+                <div class="bg-white border border-emerald-100 rounded-2xl p-4 flex gap-3">
+                    <div class="w-9 h-9 rounded-full bg-emerald-700 text-white flex items-center justify-center font-bold flex-shrink-0">3</div>
+                    <div>
+                        <div class="font-bold text-slate-900">カードで訪問申告</div>
+                        <p class="text-xs text-slate-500 mt-1">議員カードの「訪問申告」を押すだけです。</p>
+                    </div>
+                </div>
+            </div>
+
             <div class="grid lg:grid-cols-[1.1fr_0.9fr] gap-6 mt-6">
                 <div class="bg-white rounded-3xl border border-slate-200 p-5">
                     <div class="grid md:grid-cols-2 gap-4">
@@ -333,6 +381,59 @@
                     </div>
                     <div id="visitRecentList" class="space-y-3 text-sm text-slate-600">
                         グループコードを入力すると、ここに訪問履歴が表示されます。
+                    </div>
+                </div>
+            </div>
+
+            <div id="visit-map-section" class="mt-6 bg-white rounded-3xl border border-emerald-100 p-5">
+                <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-3 mb-4">
+                    <div>
+                        <div class="inline-flex items-center gap-x-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold mb-2">
+                            <i class="fas fa-map-location-dot"></i>
+                            <span>一元確認</span>
+                        </div>
+                        <h3 class="text-xl md:text-2xl font-bold tracking-tight text-slate-900">みんなの訪問マップ</h3>
+                        <p class="text-sm text-slate-600 mt-1">同じグループコードの訪問ピンをまとめて表示します。誰がどこまで回ったかをここで確認できます。</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <button id="visitMapFitButton"
+                                class="visit-button px-4 py-2.5 rounded-2xl border border-emerald-200 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-bold flex items-center gap-x-2">
+                            <i class="fas fa-arrows-to-circle"></i>
+                            <span>全体を見る</span>
+                        </button>
+                        <button id="visitMapRefreshButton"
+                                class="visit-button px-4 py-2.5 rounded-2xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold flex items-center gap-x-2">
+                            <i class="fas fa-rotate-right"></i>
+                            <span>地図を更新</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="grid lg:grid-cols-[1fr_280px] gap-4">
+                    <div class="relative">
+                        <div id="visitMap" class="visit-map"></div>
+                        <div id="visitMapEmpty" class="visit-map-empty absolute inset-0 rounded-3xl bg-slate-50/95 border border-slate-200 flex items-center justify-center text-center p-6">
+                            <div>
+                                <div class="w-14 h-14 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto mb-3">
+                                    <i class="fas fa-map-location-dot text-2xl"></i>
+                                </div>
+                                <div class="font-bold text-slate-900">まだ地図に出す訪問がありません</div>
+                                <p class="text-sm text-slate-500 mt-2">グループコードを入れて、訪問申告をするとピンが表示されます。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rounded-2xl bg-slate-50 border border-slate-200 p-4">
+                        <div class="font-bold text-slate-900 flex items-center gap-x-2">
+                            <i class="fas fa-circle-question text-emerald-700"></i>
+                            <span>地図の見方</span>
+                        </div>
+                        <ul class="text-xs text-slate-600 mt-3 space-y-2 leading-5">
+                            <li>• ピンを押すと、訪問先・申告者・時間が見られます。</li>
+                            <li>• 「全体を見る」で、全部のピンが入る大きさに戻ります。</li>
+                            <li>• 地図が出ない時は、グループコードが合っているか確認してください。</li>
+                        </ul>
+                        <div id="visitMapSummary" class="mt-4 text-sm font-bold text-emerald-800 bg-white rounded-2xl border border-emerald-100 p-3">
+                            訪問ピン 0件
+                        </div>
                     </div>
                 </div>
             </div>
@@ -986,7 +1087,7 @@
         <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-100">
             <h3 class="font-bold text-2xl mb-6">このページの使い方（スマホ対応）</h3>
             
-            <div class="grid md:grid-cols-4 gap-6 text-sm">
+            <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-6 text-sm">
                 <div>
                     <div class="font-semibold mb-2 flex items-center gap-x-2"><i class="fas fa-search text-emerald-600"></i> 1. 検索する</div>
                     <p class="text-slate-600">上の検索バーに議員名や市区町村名を入力すると、該当するカードが絞り込まれます。</p>
@@ -1003,6 +1104,10 @@
                     <div class="font-semibold mb-2 flex items-center gap-x-2"><i class="fas fa-location-dot text-emerald-600"></i> 4. 訪問を申告</div>
                     <p class="text-slate-600">グループコードとピンを設定し、カードの「訪問申告」からグループ内だけで訪問済みを共有できます。</p>
                 </div>
+                <div>
+                    <div class="font-semibold mb-2 flex items-center gap-x-2"><i class="fas fa-map-location-dot text-emerald-600"></i> 5. マップで確認</div>
+                    <p class="text-slate-600">「みんなの訪問マップ」で、回った場所を一画面で確認できます。</p>
+                </div>
             </div>
             
             <div class="mt-8 pt-6 border-t text-xs text-slate-500">
@@ -1012,6 +1117,7 @@
         </div>
     </div>
 
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
         // Tailwind script
         function initializeTailwind() {
@@ -1024,6 +1130,9 @@
 
         const visitState = {
             isLoading: false,
+            map: null,
+            markerLayer: null,
+            markerBounds: null,
             selectedMember: null,
             draftPin: null,
             reports: [],
@@ -1057,6 +1166,83 @@
                 hour: '2-digit',
                 minute: '2-digit',
             });
+        }
+
+        function ensureVisitMap() {
+            const mapEl = visitEl('visitMap');
+            if (!mapEl || typeof L === 'undefined') return null;
+            if (visitState.map) return visitState.map;
+
+            visitState.map = L.map(mapEl, {
+                scrollWheelZoom: false,
+            }).setView([36.2048, 138.2529], 8);
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; OpenStreetMap contributors',
+            }).addTo(visitState.map);
+            visitState.markerLayer = L.layerGroup().addTo(visitState.map);
+            return visitState.map;
+        }
+
+        function fitVisitMapToMarkers() {
+            const map = ensureVisitMap();
+            if (!map || !visitState.markerBounds) return;
+            map.fitBounds(visitState.markerBounds, {
+                padding: [28, 28],
+                maxZoom: 16,
+            });
+        }
+
+        function renderVisitMap() {
+            const map = ensureVisitMap();
+            const empty = visitEl('visitMapEmpty');
+            const summary = visitEl('visitMapSummary');
+            const reports = visitState.reports.filter(report =>
+                Number.isFinite(Number(report.lat)) && Number.isFinite(Number(report.lng))
+            );
+
+            if (summary) {
+                summary.textContent = `訪問ピン ${reports.length}件`;
+            }
+
+            if (!map || !visitState.markerLayer) {
+                if (empty) empty.style.display = 'flex';
+                return;
+            }
+
+            visitState.markerLayer.clearLayers();
+            visitState.markerBounds = null;
+
+            if (!reports.length) {
+                if (empty) empty.style.display = 'flex';
+                return;
+            }
+
+            if (empty) empty.style.display = 'none';
+            const bounds = [];
+
+            reports.forEach(report => {
+                const lat = Number(report.lat);
+                const lng = Number(report.lng);
+                const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${lat},${lng}`)}`;
+                const marker = L.marker([lat, lng]).bindPopup(`
+                    <div style="min-width:180px">
+                        <div style="font-weight:700;margin-bottom:4px">${escapeHtml(report.memberName)}</div>
+                        <div style="font-size:12px;color:#475569">${escapeHtml(report.displayName)} / ${formatVisitDate(report.reportedAt)}</div>
+                        <div style="font-size:12px;color:#64748b;margin-top:4px">${escapeHtml(report.address || '')}</div>
+                        ${report.note ? `<div style="font-size:12px;margin-top:6px">${escapeHtml(report.note)}</div>` : ''}
+                        <a href="${mapsUrl}" target="_blank" style="display:inline-block;margin-top:8px;color:#047857;font-weight:700;font-size:12px">Google Mapsで開く</a>
+                    </div>
+                `);
+                marker.addTo(visitState.markerLayer);
+                bounds.push([lat, lng]);
+            });
+
+            visitState.markerBounds = L.latLngBounds(bounds);
+            setTimeout(() => {
+                map.invalidateSize();
+                fitVisitMapToMarkers();
+            }, 80);
         }
 
         function formatCoordinate(pin) {
@@ -1321,6 +1507,7 @@
                 };
                 renderVisitSummary();
                 renderVisitCards();
+                renderVisitMap();
                 syncVisitSubmitState();
                 return;
             }
@@ -1336,6 +1523,7 @@
                 visitState.stats = data.stats || visitState.stats;
                 renderVisitSummary();
                 renderVisitCards();
+                renderVisitMap();
             } catch (error) {
                 showVisitStatus(error.message || '訪問履歴の取得に失敗しました。', 'error');
             } finally {
@@ -1422,8 +1610,11 @@
             visitEl('visitCoordinateButton')?.addEventListener('click', setCoordinateVisitPin);
             visitEl('visitSubmitButton')?.addEventListener('click', submitVisitReport);
             visitEl('visitRefreshButton')?.addEventListener('click', refreshVisits);
+            visitEl('visitMapRefreshButton')?.addEventListener('click', refreshVisits);
+            visitEl('visitMapFitButton')?.addEventListener('click', fitVisitMapToMarkers);
 
             syncVisitSubmitState();
+            ensureVisitMap();
             refreshVisits();
         }
         
