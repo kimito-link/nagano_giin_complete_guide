@@ -165,6 +165,40 @@
         .leaflet-container {
             font-family: 'Noto Sans JP', 'Inter', system_ui, sans-serif;
         }
+
+        .easy-large {
+            font-size: 18px;
+        }
+
+        .easy-large .visit-input,
+        .easy-large .visit-button,
+        .easy-large .search-input {
+            font-size: 1rem;
+            min-height: 52px;
+        }
+
+        .easy-large .member-card {
+            font-size: 1.05rem;
+        }
+
+        .visit-check-item {
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            border-radius: 1rem;
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+            padding: 0.7rem 0.8rem;
+            color: #64748b;
+            font-weight: 700;
+            font-size: 0.82rem;
+        }
+
+        .visit-check-item.is-done {
+            border-color: #a7f3d0;
+            background: #ecfdf5;
+            color: #047857;
+        }
     </style>
 </head>
 <body id="top" class="bg-slate-50 text-slate-800">
@@ -301,18 +335,25 @@
                         同じグループコードを知っている人だけで、訪問済みの議員カードとピン位置を共有できます。SNS投稿は不要です。
                     </p>
                 </div>
-                <div class="grid grid-cols-3 gap-3 text-center min-w-[260px]">
-                    <div class="bg-white rounded-2xl border border-emerald-100 p-3">
-                        <div id="visitTotalReports" class="text-2xl font-bold text-emerald-800">0</div>
-                        <div class="text-[11px] text-slate-500 font-semibold">申告</div>
-                    </div>
-                    <div class="bg-white rounded-2xl border border-emerald-100 p-3">
-                        <div id="visitVisitedMembers" class="text-2xl font-bold text-emerald-800">0</div>
-                        <div class="text-[11px] text-slate-500 font-semibold">訪問先</div>
-                    </div>
-                    <div class="bg-white rounded-2xl border border-emerald-100 p-3">
-                        <div id="visitUniqueVisitors" class="text-2xl font-bold text-emerald-800">0</div>
-                        <div class="text-[11px] text-slate-500 font-semibold">参加者</div>
+                <div class="min-w-[260px]">
+                    <button id="easyTextToggle"
+                            class="visit-button w-full mb-3 px-4 py-2.5 rounded-2xl border border-emerald-200 bg-white hover:bg-emerald-50 text-emerald-800 text-sm font-bold flex items-center justify-center gap-x-2">
+                        <i class="fas fa-text-height"></i>
+                        <span>文字を大きくする</span>
+                    </button>
+                    <div class="grid grid-cols-3 gap-3 text-center">
+                        <div class="bg-white rounded-2xl border border-emerald-100 p-3">
+                            <div id="visitTotalReports" class="text-2xl font-bold text-emerald-800">0</div>
+                            <div class="text-[11px] text-slate-500 font-semibold">申告</div>
+                        </div>
+                        <div class="bg-white rounded-2xl border border-emerald-100 p-3">
+                            <div id="visitVisitedMembers" class="text-2xl font-bold text-emerald-800">0</div>
+                            <div class="text-[11px] text-slate-500 font-semibold">訪問先</div>
+                        </div>
+                        <div class="bg-white rounded-2xl border border-emerald-100 p-3">
+                            <div id="visitUniqueVisitors" class="text-2xl font-bold text-emerald-800">0</div>
+                            <div class="text-[11px] text-slate-500 font-semibold">参加者</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -341,6 +382,25 @@
                 </div>
             </div>
 
+            <div class="mt-6 bg-white border border-emerald-100 rounded-3xl p-5">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                    <div>
+                        <h3 class="font-bold text-lg text-slate-900 flex items-center gap-x-2">
+                            <i class="fas fa-circle-check text-emerald-700"></i>
+                            <span>入力チェック</span>
+                        </h3>
+                        <p class="text-xs text-slate-500 mt-1">上から順に緑になれば、訪問申告できます。</p>
+                    </div>
+                    <div class="text-xs text-slate-500">困ったら「コードを作る」から始めてください。</div>
+                </div>
+                <div id="visitChecklist" class="grid md:grid-cols-4 gap-2 mt-4">
+                    <div class="visit-check-item" data-check="group"><i class="fas fa-circle"></i><span>グループコード</span></div>
+                    <div class="visit-check-item" data-check="name"><i class="fas fa-circle"></i><span>訪問した人</span></div>
+                    <div class="visit-check-item" data-check="pin"><i class="fas fa-circle"></i><span>ピン</span></div>
+                    <div class="visit-check-item" data-check="member"><i class="fas fa-circle"></i><span>訪問先カード</span></div>
+                </div>
+            </div>
+
             <div class="grid lg:grid-cols-[1.1fr_0.9fr] gap-6 mt-6">
                 <div class="bg-white rounded-3xl border border-slate-200 p-5">
                     <div class="grid md:grid-cols-2 gap-4">
@@ -348,6 +408,20 @@
                             <span class="text-xs font-bold text-slate-600">グループコード</span>
                             <input id="visitGroupCode" type="text" placeholder="例: nagano-team"
                                    class="visit-input mt-1 w-full px-4 py-2.5 border border-slate-200 rounded-2xl text-sm outline-none focus:border-emerald-600">
+                            <div class="grid grid-cols-3 gap-2 mt-2">
+                                <button id="visitMakeCodeButton" type="button"
+                                        class="visit-button px-3 py-2 rounded-2xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold">
+                                    コードを作る
+                                </button>
+                                <button id="visitCopyCodeButton" type="button"
+                                        class="visit-button px-3 py-2 rounded-2xl border border-emerald-200 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-bold">
+                                    コピー
+                                </button>
+                                <button id="visitShareCodeButton" type="button"
+                                        class="visit-button px-3 py-2 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold">
+                                    共有
+                                </button>
+                            </div>
                         </label>
                         <label class="block">
                             <span class="text-xs font-bold text-slate-600">訪問した人（表示名）</span>
@@ -1152,7 +1226,7 @@
                 </div>
                 <div>
                     <div class="font-semibold mb-2 flex items-center gap-x-2"><i class="fas fa-location-dot text-emerald-600"></i> 4. 訪問を申告</div>
-                    <p class="text-slate-600">グループコードとピンを設定し、カードの「訪問申告」からグループ内だけで訪問済みを共有できます。</p>
+                    <p class="text-slate-600">迷ったら「コードを作る」→「コピー」から始めます。緑の入力チェックが全部ついたら申告できます。</p>
                 </div>
                 <div>
                     <div class="font-semibold mb-2 flex items-center gap-x-2"><i class="fas fa-map-location-dot text-emerald-600"></i> 5. マップで確認</div>
@@ -1177,6 +1251,7 @@
         const VISIT_GROUP_STORAGE_KEY = 'naganoVisit.groupCode';
         const VISIT_NAME_STORAGE_KEY = 'naganoVisit.displayName';
         const VISIT_TOKEN_STORAGE_KEY = 'naganoVisit.visitorToken';
+        const EASY_TEXT_STORAGE_KEY = 'naganoVisit.easyLargeText';
 
         const visitState = {
             isLoading: false,
@@ -1327,6 +1402,17 @@
             return Array.from(bytes, byte => chars[byte % chars.length]).join('');
         }
 
+        function randomGroupCode() {
+            const chars = 'abcdefghjkmnpqrstuvwxyz23456789';
+            const bytes = new Uint8Array(5);
+            if (window.crypto?.getRandomValues) {
+                window.crypto.getRandomValues(bytes);
+            } else {
+                for (let i = 0; i < bytes.length; i++) bytes[i] = Math.floor(Math.random() * 256);
+            }
+            return `nagano-${Array.from(bytes, byte => chars[byte % chars.length]).join('')}`;
+        }
+
         function getVisitToken() {
             let token = localStorage.getItem(VISIT_TOKEN_STORAGE_KEY);
             if (!token) {
@@ -1448,11 +1534,28 @@
 
         function setVisitLoading(isLoading) {
             visitState.isLoading = isLoading;
-            ['visitSubmitButton', 'visitRefreshButton', 'visitCurrentPinButton', 'visitCoordinateButton'].forEach(id => {
+            ['visitSubmitButton', 'visitRefreshButton', 'visitCurrentPinButton', 'visitCoordinateButton', 'visitMapRefreshButton'].forEach(id => {
                 const button = visitEl(id);
                 if (button) button.disabled = isLoading;
             });
             syncVisitSubmitState();
+        }
+
+        function updateVisitChecklist() {
+            const checks = {
+                group: Boolean(visitEl('visitGroupCode')?.value.trim()),
+                name: Boolean(visitEl('visitDisplayName')?.value.trim()),
+                pin: Boolean(visitState.draftPin),
+                member: Boolean(visitState.selectedMember),
+            };
+
+            Object.entries(checks).forEach(([key, done]) => {
+                const item = document.querySelector(`[data-check="${key}"]`);
+                if (!item) return;
+                item.classList.toggle('is-done', done);
+                const icon = item.querySelector('i');
+                if (icon) icon.className = done ? 'fas fa-check-circle' : 'fas fa-circle';
+            });
         }
 
         function syncVisitSubmitState() {
@@ -1461,6 +1564,82 @@
             const groupCode = visitEl('visitGroupCode')?.value.trim();
             const displayName = visitEl('visitDisplayName')?.value.trim();
             button.disabled = visitState.isLoading || !groupCode || !displayName || !visitState.selectedMember || !visitState.draftPin;
+            updateVisitChecklist();
+        }
+
+        function applyEasyTextMode(enabled) {
+            document.body.classList.toggle('easy-large', enabled);
+            const button = visitEl('easyTextToggle');
+            if (button) {
+                button.innerHTML = enabled
+                    ? '<i class="fas fa-text-height"></i><span>文字を元に戻す</span>'
+                    : '<i class="fas fa-text-height"></i><span>文字を大きくする</span>';
+            }
+            localStorage.setItem(EASY_TEXT_STORAGE_KEY, enabled ? '1' : '0');
+        }
+
+        function toggleEasyTextMode() {
+            applyEasyTextMode(!document.body.classList.contains('easy-large'));
+        }
+
+        async function copyText(text, successMessage) {
+            if (!text) {
+                showVisitStatus('コピーする内容がありません。', 'error');
+                return false;
+            }
+
+            try {
+                await navigator.clipboard.writeText(text);
+                showVisitStatus(successMessage, 'success');
+                return true;
+            } catch {
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showVisitStatus(successMessage, 'success');
+                return true;
+            }
+        }
+
+        function makeVisitGroupCode() {
+            const input = visitEl('visitGroupCode');
+            if (!input) return;
+            input.value = randomGroupCode();
+            localStorage.setItem(VISIT_GROUP_STORAGE_KEY, input.value);
+            refreshVisits();
+            syncVisitSubmitState();
+            showVisitStatus('グループコードを作りました。仲間にコピーして共有してください。', 'success');
+        }
+
+        async function copyVisitGroupCode() {
+            const code = visitEl('visitGroupCode')?.value.trim();
+            await copyText(code, 'グループコードをコピーしました。仲間に送ってください。');
+        }
+
+        async function shareVisitGroupCode() {
+            const code = visitEl('visitGroupCode')?.value.trim();
+            if (!code) {
+                showVisitStatus('先にグループコードを入力するか、コードを作ってください。', 'error');
+                return;
+            }
+
+            const text = `長野県議員ガイドの訪問記録用グループコード: ${code}\n${location.origin}${location.pathname}#visits`;
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: '長野県議員ガイド 訪問記録',
+                        text,
+                    });
+                    showVisitStatus('共有画面を開きました。', 'success');
+                    return;
+                } catch {
+                    // キャンセル時などはコピーに切り替える
+                }
+            }
+            await copyText(text, '共有文をコピーしました。メールやLINEに貼り付けてください。');
         }
 
         function setDraftPin(pin, sourceLabel) {
@@ -1770,6 +1949,7 @@
             if (groupInput) groupInput.value = localStorage.getItem(VISIT_GROUP_STORAGE_KEY) || '';
             if (nameInput) nameInput.value = localStorage.getItem(VISIT_NAME_STORAGE_KEY) || '';
             if (visitAtInput && !visitAtInput.value) visitAtInput.value = formatDateTimeLocalValue();
+            applyEasyTextMode(localStorage.getItem(EASY_TEXT_STORAGE_KEY) === '1');
 
             let refreshTimer;
             groupInput?.addEventListener('input', () => {
@@ -1781,6 +1961,10 @@
                 localStorage.setItem(VISIT_NAME_STORAGE_KEY, nameInput.value.trim());
                 syncVisitSubmitState();
             });
+            visitEl('easyTextToggle')?.addEventListener('click', toggleEasyTextMode);
+            visitEl('visitMakeCodeButton')?.addEventListener('click', makeVisitGroupCode);
+            visitEl('visitCopyCodeButton')?.addEventListener('click', copyVisitGroupCode);
+            visitEl('visitShareCodeButton')?.addEventListener('click', shareVisitGroupCode);
             visitEl('visitCurrentPinButton')?.addEventListener('click', setCurrentVisitPin);
             visitEl('visitCoordinateButton')?.addEventListener('click', setCoordinateVisitPin);
             visitEl('visitSubmitButton')?.addEventListener('click', submitVisitReport);
