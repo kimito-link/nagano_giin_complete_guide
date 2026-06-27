@@ -12,10 +12,127 @@
         
         :root {
             --primary: #166534;
+            --header-height: 64px;
         }
         
+        html {
+            max-width: 100%;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Noto Sans JP', 'Inter', system_ui, sans-serif;
+            max-width: 100%;
+            overflow-x: hidden;
+            padding-top: var(--header-height);
+            touch-action: pan-y;
+            overscroll-behavior-x: none;
+        }
+
+        img,
+        video,
+        canvas,
+        svg,
+        table {
+            max-width: 100%;
+        }
+
+        section,
+        [id] {
+            scroll-margin-top: calc(var(--header-height) + 16px);
+        }
+
+        .site-header {
+            position: fixed;
+            inset: 0 0 auto 0;
+            z-index: 60;
+            height: var(--header-height);
+            background: rgba(255, 255, 255, 0.96);
+            border-bottom: 1px solid #e2e8f0;
+            backdrop-filter: blur(16px);
+        }
+
+        .site-header-inner {
+            height: var(--header-height);
+        }
+
+        .site-brand {
+            min-width: 0;
+        }
+
+        .site-brand-title {
+            font-size: clamp(1rem, 2.2vw, 1.5rem);
+            line-height: 1.05;
+            max-width: min(42vw, 260px);
+            white-space: normal;
+        }
+
+        .desktop-nav {
+            min-width: 0;
+        }
+
+        .desktop-nav a {
+            white-space: nowrap;
+        }
+
+        .header-action-pill {
+            white-space: nowrap;
+        }
+
+        .mobile-menu-panel {
+            position: fixed;
+            inset: var(--header-height) 0 auto 0;
+            z-index: 55;
+            max-height: calc(100dvh - var(--header-height));
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            transform: translateY(-12px);
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+        }
+
+        .mobile-menu-panel.is-open {
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .mobile-menu-backdrop {
+            position: fixed;
+            inset: var(--header-height) 0 0 0;
+            z-index: 50;
+            background: rgba(15, 23, 42, 0.36);
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.2s ease, visibility 0.2s ease;
+        }
+
+        .mobile-menu-backdrop.is-open {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .menu-open {
+            overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            :root {
+                --header-height: 72px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .site-brand-title {
+                max-width: 190px;
+                font-size: 1rem;
+            }
         }
         
         .section-header {
@@ -281,20 +398,20 @@
 </head>
 <body id="top" class="bg-slate-50 text-slate-800">
     <!-- Navbar -->
-    <nav class="bg-white border-b sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="flex items-center justify-between h-16">
-                <a href="#top" class="flex items-center gap-x-3 hover:opacity-90 transition-opacity" aria-label="ページ先頭へ戻る">
-                    <div class="w-10 h-10 bg-emerald-800 rounded-xl flex items-center justify-center">
-                        <i class="fas fa-landmark text-white text-2xl"></i>
+    <header class="site-header">
+        <div class="max-w-7xl mx-auto px-3 sm:px-4">
+            <div class="site-header-inner flex items-center justify-between gap-3">
+                <a href="#top" class="site-brand flex items-center gap-x-2 sm:gap-x-3 hover:opacity-90 transition-opacity" aria-label="ページ先頭へ戻る">
+                    <div class="w-9 h-9 sm:w-10 sm:h-10 bg-emerald-800 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-landmark text-white text-xl sm:text-2xl"></i>
                     </div>
-                    <div>
-                        <span class="font-bold text-2xl tracking-tight text-emerald-900">長野県議員ガイド</span>
-                        <span class="text-xs text-emerald-600 block -mt-1">公的連絡先完全リスト</span>
+                    <div class="min-w-0">
+                        <span class="site-brand-title font-bold tracking-tight text-emerald-900 block">長野県議員ガイド</span>
+                        <span class="text-[10px] sm:text-xs text-emerald-600 block leading-tight">公的連絡先完全リスト</span>
                     </div>
                 </a>
-                
-                <div class="hidden md:flex items-center gap-x-8 text-sm font-medium">
+
+                <nav class="desktop-nav hidden xl:flex items-center gap-x-5 text-sm font-medium" aria-label="主要メニュー">
                     <a href="#top" class="hover:text-emerald-700 transition-colors">TOP</a>
                     <a href="#prefectural" class="hover:text-emerald-700 transition-colors">県議会</a>
                     <a href="#municipal" class="hover:text-emerald-700 transition-colors">市議会</a>
@@ -302,34 +419,58 @@
                     <a href="#visit-map-section" class="hover:text-emerald-700 transition-colors">訪問マップ</a>
                     <a href="#reference" class="hover:text-emerald-700 transition-colors">参考資料</a>
                     <a href="#howto" class="hover:text-emerald-700 transition-colors">使い方</a>
-                </div>
-                
-                <div class="flex items-center gap-x-2">
-                    <a href="#top" class="px-3 py-1.5 border border-emerald-200 text-emerald-800 rounded-full text-xs font-bold hover:bg-emerald-50">
-                        TOP
+                </nav>
+
+                <div class="flex items-center gap-x-2 flex-shrink-0">
+                    <a href="#visits"
+                       class="hidden md:inline-flex header-action-pill px-3 py-2 bg-emerald-700 text-white rounded-full text-xs font-bold hover:bg-emerald-800 items-center gap-x-1">
+                        <i class="fas fa-location-dot"></i>
+                        <span>訪問申告</span>
                     </a>
                     <a href="https://kenshokai.or.jp/index.html"
                        target="_blank"
                        rel="noopener noreferrer"
-                       class="px-3 py-1.5 border border-emerald-200 text-emerald-800 rounded-full text-xs font-bold hover:bg-emerald-50 inline-flex items-center gap-x-1">
+                       class="hidden lg:inline-flex header-action-pill px-3 py-2 border border-emerald-200 text-emerald-800 rounded-full text-xs font-bold hover:bg-emerald-50 items-center gap-x-1">
                         <i class="fas fa-up-right-from-square"></i>
                         <span>顕正会</span>
                     </a>
-                    <a href="https://kenshokai.or.jp/special_issue.html"
-                       target="_blank"
-                       rel="noopener noreferrer"
-                       class="hidden lg:inline-flex px-3 py-1.5 border border-emerald-200 text-emerald-800 rounded-full text-xs font-bold hover:bg-emerald-50 items-center gap-x-1">
-                        <i class="fas fa-newspaper"></i>
-                        <span>特集号</span>
-                    </a>
-                    <div class="px-3 py-1.5 bg-emerald-100 text-emerald-800 rounded-full text-xs font-semibold flex items-center gap-x-1">
+                    <div class="hidden 2xl:flex header-action-pill px-3 py-2 bg-emerald-100 text-emerald-800 rounded-full text-xs font-semibold items-center gap-x-1">
                         <i class="fas fa-check-circle"></i>
                         <span>2026年最新公開情報</span>
                     </div>
+                    <button id="mobileMenuButton"
+                            type="button"
+                            class="xl:hidden w-11 h-11 rounded-2xl border border-emerald-200 bg-white text-emerald-900 flex items-center justify-center"
+                            aria-label="メニューを開く"
+                            aria-controls="mobileMenuPanel"
+                            aria-expanded="false">
+                        <i id="mobileMenuIcon" class="fas fa-bars text-lg"></i>
+                    </button>
                 </div>
             </div>
         </div>
-    </nav>
+    </header>
+
+    <div id="mobileMenuBackdrop" class="mobile-menu-backdrop" hidden></div>
+    <div id="mobileMenuPanel" class="mobile-menu-panel bg-white border-b border-slate-200 shadow-xl" hidden>
+        <div class="max-w-7xl mx-auto px-4 py-4">
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-sm font-bold">
+                <a href="#top" class="mobile-menu-link rounded-2xl bg-slate-50 border border-slate-200 px-4 py-3 text-slate-800">TOP</a>
+                <a href="#prefectural" class="mobile-menu-link rounded-2xl bg-slate-50 border border-slate-200 px-4 py-3 text-slate-800">県議会</a>
+                <a href="#municipal" class="mobile-menu-link rounded-2xl bg-slate-50 border border-slate-200 px-4 py-3 text-slate-800">市議会</a>
+                <a href="#visits" class="mobile-menu-link rounded-2xl bg-emerald-700 border border-emerald-700 px-4 py-3 text-white">訪問申告</a>
+                <a href="#visit-map-section" class="mobile-menu-link rounded-2xl bg-slate-50 border border-slate-200 px-4 py-3 text-slate-800">訪問マップ</a>
+                <a href="#reference" class="mobile-menu-link rounded-2xl bg-slate-50 border border-slate-200 px-4 py-3 text-slate-800">参考資料</a>
+                <a href="#howto" class="mobile-menu-link rounded-2xl bg-slate-50 border border-slate-200 px-4 py-3 text-slate-800">使い方</a>
+                <a href="https://kenshokai.or.jp/index.html" target="_blank" rel="noopener noreferrer" class="mobile-menu-link rounded-2xl bg-emerald-50 border border-emerald-100 px-4 py-3 text-emerald-900">顕正会公式</a>
+                <a href="https://kenshokai.or.jp/special_issue.html" target="_blank" rel="noopener noreferrer" class="mobile-menu-link rounded-2xl bg-emerald-50 border border-emerald-100 px-4 py-3 text-emerald-900">特集号</a>
+            </div>
+            <div class="mt-3 rounded-2xl bg-emerald-50 border border-emerald-100 px-4 py-3 text-xs font-bold text-emerald-800 flex items-center gap-x-2">
+                <i class="fas fa-check-circle"></i>
+                <span>2026年最新公開情報 / スマホ対応</span>
+            </div>
+        </div>
+    </div>
 
     <!-- Hero -->
     <div class="bg-gradient-to-br from-emerald-900 via-emerald-800 to-emerald-950 text-white">
@@ -2711,6 +2852,51 @@
                 setTimeout(() => status.classList.add('hidden'), 3500);
             });
         }
+
+        function setupMobileMenu() {
+            const button = document.getElementById('mobileMenuButton');
+            const icon = document.getElementById('mobileMenuIcon');
+            const panel = document.getElementById('mobileMenuPanel');
+            const backdrop = document.getElementById('mobileMenuBackdrop');
+            if (!button || !panel || !backdrop) return;
+
+            const setMenuOpen = isOpen => {
+                button.setAttribute('aria-expanded', String(isOpen));
+                panel.hidden = false;
+                backdrop.hidden = false;
+                panel.classList.toggle('is-open', isOpen);
+                backdrop.classList.toggle('is-open', isOpen);
+                document.body.classList.toggle('menu-open', isOpen);
+                document.documentElement.classList.toggle('menu-open', isOpen);
+                if (icon) icon.className = isOpen ? 'fas fa-xmark text-lg' : 'fas fa-bars text-lg';
+
+                if (!isOpen) {
+                    window.setTimeout(() => {
+                        if (button.getAttribute('aria-expanded') === 'false') {
+                            panel.hidden = true;
+                            backdrop.hidden = true;
+                        }
+                    }, 220);
+                }
+            };
+
+            button.addEventListener('click', () => {
+                setMenuOpen(button.getAttribute('aria-expanded') !== 'true');
+            });
+
+            backdrop.addEventListener('click', () => setMenuOpen(false));
+            panel.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => setMenuOpen(false));
+            });
+
+            document.addEventListener('keydown', event => {
+                if (event.key === 'Escape') setMenuOpen(false);
+            });
+
+            window.addEventListener('resize', () => {
+                if (window.innerWidth >= 1280) setMenuOpen(false);
+            });
+        }
         
         // グローバル検索
         function setupGlobalSearch() {
@@ -2748,6 +2934,7 @@
         // 初期化
         function init() {
             initializeTailwind();
+            setupMobileMenu();
             setupGlobalSearch();
             setupVisitFeature();
             setupSanaeTokenCopy();
