@@ -136,6 +136,18 @@
             border-color: #e2e8f0;
         }
 
+        .visit-card-visitors {
+            display: none;
+            color: #475569;
+            font-size: 0.75rem;
+            line-height: 1.45;
+            margin-top: 0.35rem;
+        }
+
+        .visit-card-visitors.is-visible {
+            display: block;
+        }
+
         .visit-map {
             min-height: 360px;
             height: 46vh;
@@ -338,7 +350,7 @@
                                    class="visit-input mt-1 w-full px-4 py-2.5 border border-slate-200 rounded-2xl text-sm outline-none focus:border-emerald-600">
                         </label>
                         <label class="block">
-                            <span class="text-xs font-bold text-slate-600">表示名</span>
+                            <span class="text-xs font-bold text-slate-600">訪問した人（表示名）</span>
                             <input id="visitDisplayName" type="text" placeholder="例: 佐藤"
                                    class="visit-input mt-1 w-full px-4 py-2.5 border border-slate-200 rounded-2xl text-sm outline-none focus:border-emerald-600">
                         </label>
@@ -410,6 +422,15 @@
                     </div>
                     <div id="visitRecentList" class="space-y-3 text-sm text-slate-600">
                         グループコードを入力すると、ここに訪問履歴が表示されます。
+                    </div>
+                    <div class="mt-5 pt-5 border-t border-slate-100">
+                        <h3 class="font-bold text-lg text-slate-900 flex items-center gap-x-2">
+                            <i class="fas fa-users text-emerald-700"></i>
+                            <span>誰が訪問したか</span>
+                        </h3>
+                        <div id="visitVisitorList" class="space-y-3 text-sm text-slate-600 mt-3">
+                            訪問申告が入ると、訪問先ごとに訪問者名が表示されます。
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1272,7 +1293,7 @@
                 const marker = L.marker([lat, lng]).bindPopup(`
                     <div style="min-width:180px">
                         <div style="font-weight:700;margin-bottom:4px">${escapeHtml(report.memberName)}</div>
-                        <div style="font-size:12px;color:#475569">${escapeHtml(report.displayName)} / 訪問 ${formatVisitDate(report.visitAt || report.reportedAt)}</div>
+                        <div style="font-size:12px;color:#475569">訪問者: ${escapeHtml(report.displayName)} / 訪問 ${formatVisitDate(report.visitAt || report.reportedAt)}</div>
                         <div style="font-size:12px;color:#64748b;margin-top:4px">${escapeHtml(report.address || '')}</div>
                         ${report.conversation ? `<div style="font-size:12px;margin-top:6px;white-space:pre-wrap"><strong>会話:</strong> ${escapeHtml(report.conversation)}</div>` : ''}
                         ${report.nextAction ? `<div style="font-size:12px;margin-top:6px"><strong>次:</strong> ${escapeHtml(report.nextAction)}</div>` : ''}
@@ -1317,6 +1338,54 @@
 
         function simpleMemberKey(name, address) {
             return `${name.trim()}::${address.trim()}`.slice(0, 220);
+        }
+
+        function buildMemberVisitorSummaries() {
+            const summaries = new Map();
+
+            visitState.reports.forEach(report => {
+                const memberKey = report.memberKey;
+                if (!memberKey) return;
+
+                if (!summaries.has(memberKey)) {
+                    summaries.set(memberKey, {
+                        memberKey,
+                        memberName: report.memberName || '訪問先',
+                        address: report.address || '',
+                        total: 0,
+                        latestAt: report.visitAt || report.reportedAt,
+                        visitors: new Map(),
+                    });
+                }
+
+                const summary = summaries.get(memberKey);
+                summary.total += 1;
+                const currentTime = new Date(report.visitAt || report.reportedAt || 0).getTime();
+                const latestTime = new Date(summary.latestAt || 0).getTime();
+                if (currentTime > latestTime) summary.latestAt = report.visitAt || report.reportedAt;
+
+                const visitorName = report.displayName || '名前未入力';
+                const visitor = summary.visitors.get(visitorName) || {
+                    name: visitorName,
+                    count: 0,
+                    latestAt: report.visitAt || report.reportedAt,
+                };
+                visitor.count += 1;
+                const visitorCurrentTime = new Date(report.visitAt || report.reportedAt || 0).getTime();
+                const visitorLatestTime = new Date(visitor.latestAt || 0).getTime();
+                if (visitorCurrentTime > visitorLatestTime) visitor.latestAt = report.visitAt || report.reportedAt;
+                summary.visitors.set(visitorName, visitor);
+            });
+
+            return summaries;
+        }
+
+        function getVisitorNames(summary, limit = 3) {
+            if (!summary) return [];
+            return Array.from(summary.visitors.values())
+                .sort((a, b) => new Date(b.latestAt || 0) - new Date(a.latestAt || 0))
+                .slice(0, limit)
+                .map(visitor => visitor.count > 1 ? `${visitor.name}(${visitor.count})` : visitor.name);
         }
 
         function parseCoordinateInput(input) {
@@ -1476,8 +1545,15 @@
                 badge.dataset.visitBadge = 'true';
                 badge.innerHTML = '<i class="fas fa-location-dot"></i><span>訪問 0件</span>';
 
+                const visitorLine = document.createElement('div');
+                visitorLine.className = 'visit-card-visitors';
+                visitorLine.dataset.visitVisitors = 'true';
+
                 const infoBlock = card.firstElementChild;
-                if (infoBlock) infoBlock.appendChild(badge);
+                if (infoBlock) {
+                    infoBlock.appendChild(badge);
+                    infoBlock.appendChild(visitorLine);
+                }
 
                 const button = document.createElement('button');
                 button.type = 'button';
@@ -1494,15 +1570,25 @@
 
         function renderVisitCards() {
             const counts = visitState.stats.memberCounts || {};
+            const summaries = buildMemberVisitorSummaries();
             document.querySelectorAll('.member-card').forEach(card => {
                 const badge = card.querySelector('[data-visit-badge="true"]');
+                const visitorLine = card.querySelector('[data-visit-visitors="true"]');
                 if (!badge) return;
 
                 const count = counts[card.dataset.memberKey] || 0;
+                const summary = summaries.get(card.dataset.memberKey);
+                const visitorNames = getVisitorNames(summary);
                 badge.classList.toggle('is-empty', count === 0);
                 badge.innerHTML = count > 0
                     ? `<i class="fas fa-check-circle"></i><span>訪問 ${count}件</span>`
                     : '<i class="fas fa-location-dot"></i><span>訪問 0件</span>';
+                if (visitorLine) {
+                    visitorLine.classList.toggle('is-visible', visitorNames.length > 0);
+                    visitorLine.textContent = visitorNames.length > 0
+                        ? `${visitorNames.join('、')} が訪問`
+                        : '';
+                }
             });
         }
 
@@ -1512,10 +1598,14 @@
             visitEl('visitUniqueVisitors').textContent = visitState.stats.uniqueVisitors || 0;
 
             const list = visitEl('visitRecentList');
+            const visitorList = visitEl('visitVisitorList');
             if (!list) return;
 
             if (!visitState.reports.length) {
                 list.innerHTML = '<div class="text-slate-500 bg-slate-50 border border-slate-200 rounded-2xl p-4">まだ訪問申告はありません。</div>';
+                if (visitorList) {
+                    visitorList.innerHTML = '<div class="text-slate-500 bg-slate-50 border border-slate-200 rounded-2xl p-4">まだ訪問者はいません。</div>';
+                }
                 return;
             }
 
@@ -1528,7 +1618,7 @@
                     <div class="flex items-start justify-between gap-3">
                         <div>
                             <div class="font-bold text-slate-900">${escapeHtml(report.memberName)}</div>
-                            <div class="text-xs text-slate-500 mt-0.5">${escapeHtml(report.displayName)} / 訪問 ${formatVisitDate(report.visitAt || report.reportedAt)}</div>
+                            <div class="text-xs text-slate-500 mt-0.5">訪問者: ${escapeHtml(report.displayName)} / 訪問 ${formatVisitDate(report.visitAt || report.reportedAt)}</div>
                         </div>
                         <a href="${mapUrl}" target="_blank" class="text-xs font-bold text-emerald-700 whitespace-nowrap">ピン</a>
                     </div>
@@ -1538,6 +1628,32 @@
                 `;
                 list.appendChild(item);
             });
+
+            if (visitorList) {
+                const summaries = Array.from(buildMemberVisitorSummaries().values())
+                    .sort((a, b) => new Date(b.latestAt || 0) - new Date(a.latestAt || 0))
+                    .slice(0, 12);
+                visitorList.innerHTML = '';
+                summaries.forEach(summary => {
+                    const item = document.createElement('div');
+                    item.className = 'rounded-2xl border border-emerald-100 bg-emerald-50/50 p-3';
+                    const visitors = Array.from(summary.visitors.values())
+                        .sort((a, b) => new Date(b.latestAt || 0) - new Date(a.latestAt || 0));
+                    item.innerHTML = `
+                        <div class="font-bold text-slate-900">${escapeHtml(summary.memberName)}</div>
+                        <div class="text-xs text-slate-500 mt-0.5">${escapeHtml(summary.address)}</div>
+                        <div class="mt-2 flex flex-wrap gap-1.5">
+                            ${visitors.map(visitor => `
+                                <span class="inline-flex items-center gap-x-1 rounded-full bg-white border border-emerald-100 px-2.5 py-1 text-xs font-bold text-emerald-800">
+                                    <i class="fas fa-user-check"></i>
+                                    <span>${escapeHtml(visitor.name)}${visitor.count > 1 ? ` ${visitor.count}回` : ''}</span>
+                                </span>
+                            `).join('')}
+                        </div>
+                    `;
+                    visitorList.appendChild(item);
+                });
+            }
         }
 
         async function refreshVisits() {

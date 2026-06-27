@@ -9,6 +9,7 @@
 - `DATABASE_URL`: PostgreSQL 接続URL。Production 環境変数に設定してください。
 - テーブル `nagano_visit_reports` は API 初回実行時に自動作成されます。
 - フロント側ではグループコード、表示名、ピン位置、訪問日時、会話記録、次にやることを入力して、各議員カードの「訪問申告」から記録します。
+- 訪問先ごとに、誰が訪問したかをカード・一覧・地図ピンで確認できます。
 
 ## Vercel Token Deploy
 
