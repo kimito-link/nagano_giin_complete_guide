@@ -199,6 +199,55 @@
             background: #ecfdf5;
             color: #047857;
         }
+
+        .voice-panel {
+            border: 1px solid #d1fae5;
+            background: #f8fafc;
+            border-radius: 1rem;
+            padding: 0.85rem;
+        }
+
+        .voice-status {
+            border-radius: 0.9rem;
+            border: 1px solid #e2e8f0;
+            background: #ffffff;
+            color: #475569;
+            padding: 0.65rem 0.75rem;
+        }
+
+        .voice-status.is-recording {
+            border-color: #a7f3d0;
+            background: #ecfdf5;
+            color: #047857;
+        }
+
+        .voice-dot {
+            width: 0.55rem;
+            height: 0.55rem;
+            border-radius: 9999px;
+            background: #94a3b8;
+            flex-shrink: 0;
+        }
+
+        .voice-status.is-recording .voice-dot {
+            background: #059669;
+            animation: voicePulse 1s ease-in-out infinite;
+        }
+
+        .reference-link {
+            min-height: 48px;
+        }
+
+        @keyframes voicePulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.45);
+                opacity: 0.45;
+            }
+        }
     </style>
 </head>
 <body id="top" class="bg-slate-50 text-slate-800">
@@ -222,6 +271,7 @@
                     <a href="#municipal" class="hover:text-emerald-700 transition-colors">市議会</a>
                     <a href="#visits" class="hover:text-emerald-700 transition-colors">訪問申告</a>
                     <a href="#visit-map-section" class="hover:text-emerald-700 transition-colors">訪問マップ</a>
+                    <a href="#reference" class="hover:text-emerald-700 transition-colors">参考資料</a>
                     <a href="#howto" class="hover:text-emerald-700 transition-colors">使い方</a>
                 </div>
                 
@@ -235,6 +285,13 @@
                        class="px-3 py-1.5 border border-emerald-200 text-emerald-800 rounded-full text-xs font-bold hover:bg-emerald-50 inline-flex items-center gap-x-1">
                         <i class="fas fa-up-right-from-square"></i>
                         <span>顕正会</span>
+                    </a>
+                    <a href="https://kenshokai.or.jp/special_issue.html"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="hidden lg:inline-flex px-3 py-1.5 border border-emerald-200 text-emerald-800 rounded-full text-xs font-bold hover:bg-emerald-50 items-center gap-x-1">
+                        <i class="fas fa-newspaper"></i>
+                        <span>特集号</span>
                     </a>
                     <div class="px-3 py-1.5 bg-emerald-100 text-emerald-800 rounded-full text-xs font-semibold flex items-center gap-x-1">
                         <i class="fas fa-check-circle"></i>
@@ -401,6 +458,49 @@
                 </div>
             </div>
 
+            <div id="reference" class="mt-6 bg-white border border-emerald-100 rounded-3xl p-5">
+                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                    <div>
+                        <div class="inline-flex items-center gap-x-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold mb-2">
+                            <i class="fas fa-newspaper"></i>
+                            <span>参考資料</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900">高市政権に関する特集号リンク</h3>
+                        <p class="text-sm text-slate-600 mt-1">顕正会公式の特集号一覧から、該当するテキスト版をすぐ開けるようにしました。</p>
+                    </div>
+                    <a href="https://kenshokai.or.jp/special_issue.html"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="reference-link inline-flex items-center justify-center gap-x-2 rounded-2xl bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-3 text-sm font-bold">
+                        <i class="fas fa-up-right-from-square"></i>
+                        <span>公式特集号一覧</span>
+                    </a>
+                </div>
+                <div class="grid md:grid-cols-3 gap-3 mt-4">
+                    <a href="https://kenshoshimbun.com/issue/260505_takaichi-regime-scheme3.html"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="reference-link rounded-2xl border border-emerald-100 bg-emerald-50 hover:bg-emerald-100 p-4 flex items-center justify-between gap-3 text-sm">
+                        <span><strong class="block text-slate-900">「高市政権の野望」特集号3</strong><span class="text-xs text-slate-600">2026年5月5日号・テキスト版</span></span>
+                        <i class="fas fa-up-right-from-square text-emerald-700"></i>
+                    </a>
+                    <a href="https://kenshoshimbun.com/issue/260405_takaichi-regime-scheme2.html"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="reference-link rounded-2xl border border-emerald-100 bg-emerald-50 hover:bg-emerald-100 p-4 flex items-center justify-between gap-3 text-sm">
+                        <span><strong class="block text-slate-900">「高市政権の野望」特集号2</strong><span class="text-xs text-slate-600">2026年4月5日号・テキスト版</span></span>
+                        <i class="fas fa-up-right-from-square text-emerald-700"></i>
+                    </a>
+                    <a href="https://kenshoshimbun.com/issue/260305_takaichi-regime-scheme.html"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="reference-link rounded-2xl border border-emerald-100 bg-emerald-50 hover:bg-emerald-100 p-4 flex items-center justify-between gap-3 text-sm">
+                        <span><strong class="block text-slate-900">「高市政権の野望」特集号</strong><span class="text-xs text-slate-600">2026年3月5日号・テキスト版</span></span>
+                        <i class="fas fa-up-right-from-square text-emerald-700"></i>
+                    </a>
+                </div>
+            </div>
+
             <div class="grid lg:grid-cols-[1.1fr_0.9fr] gap-6 mt-6">
                 <div class="bg-white rounded-3xl border border-slate-200 p-5">
                     <div class="grid md:grid-cols-2 gap-4">
@@ -471,6 +571,35 @@
                             <textarea id="visitConversation" rows="4" maxlength="1200" placeholder="例: 何をお願いしたか、相手の反応、約束したことなど"
                                       class="mt-1 w-full px-4 py-3 border border-slate-200 rounded-2xl text-sm outline-none focus:border-emerald-600"></textarea>
                         </label>
+                        <div id="visitVoicePanel" class="voice-panel mt-2">
+                            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                <div>
+                                    <div class="text-xs font-bold text-slate-700 flex items-center gap-x-2">
+                                        <i class="fas fa-microphone-lines text-emerald-700"></i>
+                                        <span>スマホで録音・文字起こし</span>
+                                    </div>
+                                    <div id="visitVoiceSupport" class="text-[11px] text-slate-500 mt-1">
+                                        相手の了承を得てから録音開始してください。文字起こしは会話欄に残り、訪問申告で保存されます。
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2 sm:min-w-[220px]">
+                                    <button id="visitVoiceStartButton" type="button"
+                                            class="visit-button px-3 py-2 rounded-2xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold flex items-center justify-center gap-x-2">
+                                        <i class="fas fa-microphone"></i>
+                                        <span>録音開始</span>
+                                    </button>
+                                    <button id="visitVoiceStopButton" type="button" disabled
+                                            class="visit-button px-3 py-2 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold flex items-center justify-center gap-x-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                                        <i class="fas fa-stop"></i>
+                                        <span>録音停止</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="visitVoiceStatus" class="voice-status mt-3 text-xs flex items-center gap-x-2" aria-live="polite">
+                                <span class="voice-dot"></span>
+                                <span>録音開始を押すと、話した内容が会話欄に入ります。申告前の下書きもこの端末に残ります。</span>
+                            </div>
+                        </div>
                         <label class="block mt-3">
                             <span class="text-xs font-bold text-slate-600">次にやること・引き継ぎ</span>
                             <input id="visitNextAction" type="text" maxlength="300" placeholder="例: 来週もう一度電話 / 資料を送る"
@@ -1211,7 +1340,7 @@
         <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-100">
             <h3 class="font-bold text-2xl mb-6">このページの使い方（スマホ対応）</h3>
             
-            <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-6 text-sm">
+            <div class="grid md:grid-cols-2 lg:grid-cols-6 gap-6 text-sm">
                 <div>
                     <div class="font-semibold mb-2 flex items-center gap-x-2"><i class="fas fa-search text-emerald-600"></i> 1. 検索する</div>
                     <p class="text-slate-600">上の検索バーに議員名や市区町村名を入力すると、該当するカードが絞り込まれます。</p>
@@ -1229,7 +1358,11 @@
                     <p class="text-slate-600">迷ったら「コードを作る」→「コピー」から始めます。緑の入力チェックが全部ついたら申告できます。</p>
                 </div>
                 <div>
-                    <div class="font-semibold mb-2 flex items-center gap-x-2"><i class="fas fa-map-location-dot text-emerald-600"></i> 5. マップで確認</div>
+                    <div class="font-semibold mb-2 flex items-center gap-x-2"><i class="fas fa-microphone-lines text-emerald-600"></i> 5. 音声で記録</div>
+                    <p class="text-slate-600">会話欄の「開始」を押すと、話した内容を文字にして残せます。</p>
+                </div>
+                <div>
+                    <div class="font-semibold mb-2 flex items-center gap-x-2"><i class="fas fa-map-location-dot text-emerald-600"></i> 6. マップで確認</div>
                     <p class="text-slate-600">「みんなの訪問マップ」で、回った場所を一画面で確認できます。</p>
                 </div>
             </div>
@@ -1251,6 +1384,7 @@
         const VISIT_GROUP_STORAGE_KEY = 'naganoVisit.groupCode';
         const VISIT_NAME_STORAGE_KEY = 'naganoVisit.displayName';
         const VISIT_TOKEN_STORAGE_KEY = 'naganoVisit.visitorToken';
+        const VISIT_CONVERSATION_DRAFT_KEY = 'naganoVisit.conversationDraft';
         const EASY_TEXT_STORAGE_KEY = 'naganoVisit.easyLargeText';
 
         const visitState = {
@@ -1261,6 +1395,9 @@
             selectedMember: null,
             draftPin: null,
             reports: [],
+            voiceRecognition: null,
+            voiceIsListening: false,
+            voiceBaseText: '',
             stats: {
                 totalReports: 0,
                 uniqueVisitors: 0,
@@ -1582,6 +1719,136 @@
             applyEasyTextMode(!document.body.classList.contains('easy-large'));
         }
 
+        function getSpeechRecognitionConstructor() {
+            return window.SpeechRecognition || window.webkitSpeechRecognition || null;
+        }
+
+        function setVisitVoiceStatus(message, type = 'info') {
+            const status = visitEl('visitVoiceStatus');
+            if (!status) return;
+
+            status.classList.toggle('is-recording', type === 'recording');
+            status.innerHTML = '';
+
+            const dot = document.createElement('span');
+            dot.className = 'voice-dot';
+            const text = document.createElement('span');
+            text.textContent = message;
+            status.append(dot, text);
+        }
+
+        function syncVisitVoiceControls() {
+            const startButton = visitEl('visitVoiceStartButton');
+            const stopButton = visitEl('visitVoiceStopButton');
+            if (startButton) startButton.disabled = visitState.voiceIsListening;
+            if (stopButton) stopButton.disabled = !visitState.voiceIsListening;
+        }
+
+        function renderVisitVoiceTranscript(results) {
+            const textarea = visitEl('visitConversation');
+            if (!textarea) return;
+
+            let transcript = '';
+            for (let i = 0; i < results.length; i++) {
+                transcript += results[i][0].transcript;
+            }
+
+            transcript = transcript.trim();
+            const separator = visitState.voiceBaseText && transcript ? '\n' : '';
+            const nextText = `${visitState.voiceBaseText}${separator}${transcript}`;
+            const maxLength = textarea.maxLength > 0 ? textarea.maxLength : 1200;
+            textarea.value = nextText.slice(0, maxLength);
+            saveVisitConversationDraft();
+        }
+
+        function saveVisitConversationDraft() {
+            const textarea = visitEl('visitConversation');
+            if (!textarea) return;
+            localStorage.setItem(VISIT_CONVERSATION_DRAFT_KEY, textarea.value);
+        }
+
+        function startVisitVoiceInput() {
+            const SpeechRecognition = getSpeechRecognitionConstructor();
+            const textarea = visitEl('visitConversation');
+            if (!textarea) return;
+
+            if (!SpeechRecognition) {
+                textarea.focus();
+                setVisitVoiceStatus('このブラウザでは自動文字起こしが使えません。会話欄をタップして、スマホ標準キーボードのマイクで入力してください。入力内容は下書きに残ります。', 'info');
+                return;
+            }
+
+            if (visitState.voiceRecognition && visitState.voiceIsListening) {
+                return;
+            }
+
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'ja-JP';
+            recognition.continuous = true;
+            recognition.interimResults = true;
+            recognition.maxAlternatives = 1;
+
+            visitState.voiceRecognition = recognition;
+            visitState.voiceBaseText = textarea.value.trim();
+
+            recognition.onstart = () => {
+                visitState.voiceIsListening = true;
+                syncVisitVoiceControls();
+                setVisitVoiceStatus('録音・文字起こし中です。話した内容が会話欄に入り、申告すると保存されます。', 'recording');
+            };
+
+            recognition.onresult = event => {
+                renderVisitVoiceTranscript(event.results);
+            };
+
+            recognition.onerror = event => {
+                visitState.voiceIsListening = false;
+                syncVisitVoiceControls();
+                const messages = {
+                    'not-allowed': 'マイクが許可されませんでした。ブラウザのマイク許可を確認してください。',
+                    'no-speech': '音声を聞き取れませんでした。もう一度「開始」を押してください。',
+                    network: '音声認識の通信に失敗しました。電波状況を確認してください。',
+                };
+                setVisitVoiceStatus(messages[event.error] || '音声文字起こしを使えませんでした。会話欄に直接入力してください。', 'info');
+            };
+
+            recognition.onend = () => {
+                visitState.voiceIsListening = false;
+                syncVisitVoiceControls();
+                saveVisitConversationDraft();
+                setVisitVoiceStatus('録音を停止しました。文字起こしは会話欄と下書きに残っています。訪問申告で保存されます。', 'info');
+            };
+
+            try {
+                recognition.start();
+            } catch {
+                visitState.voiceIsListening = false;
+                syncVisitVoiceControls();
+                setVisitVoiceStatus('音声文字起こしを開始できませんでした。少し待ってからもう一度押してください。', 'info');
+            }
+        }
+
+        function stopVisitVoiceInput() {
+            if (!visitState.voiceRecognition) return;
+            visitState.voiceIsListening = false;
+            syncVisitVoiceControls();
+            visitState.voiceRecognition.stop();
+        }
+
+        function updateVisitVoiceAvailability() {
+            const support = visitEl('visitVoiceSupport');
+            const startButton = visitEl('visitVoiceStartButton');
+            if (!support || !startButton) return;
+
+            if (getSpeechRecognitionConstructor()) {
+                support.textContent = '相手の了承を得てから録音開始してください。文字起こしは会話欄に残り、訪問申告で保存されます。';
+                return;
+            }
+
+            support.textContent = 'この端末で自動文字起こしが使えない場合は、会話欄をタップしてスマホ標準キーボードのマイクを使ってください。入力内容は下書きに残ります。';
+            startButton.innerHTML = '<i class="fas fa-keyboard"></i><span>入力案内</span>';
+        }
+
         async function copyText(text, successMessage) {
             if (!text) {
                 showVisitStatus('コピーする内容がありません。', 'error');
@@ -1875,6 +2142,11 @@
         }
 
         async function submitVisitReport() {
+            if (visitState.voiceIsListening) {
+                stopVisitVoiceInput();
+            }
+            saveVisitConversationDraft();
+
             const groupCode = visitEl('visitGroupCode')?.value.trim();
             const displayName = visitEl('visitDisplayName')?.value.trim();
             const note = visitEl('visitNote')?.value.trim();
@@ -1931,6 +2203,7 @@
                 if (visitEl('visitConversation')) visitEl('visitConversation').value = '';
                 if (visitEl('visitNextAction')) visitEl('visitNextAction').value = '';
                 if (visitEl('visitAtInput')) visitEl('visitAtInput').value = formatDateTimeLocalValue();
+                localStorage.removeItem(VISIT_CONVERSATION_DRAFT_KEY);
                 showVisitStatus(`${visitState.selectedMember.memberName} への訪問を申告しました。`, 'success');
                 await refreshVisits();
             } catch (error) {
@@ -1946,10 +2219,15 @@
             const groupInput = visitEl('visitGroupCode');
             const nameInput = visitEl('visitDisplayName');
             const visitAtInput = visitEl('visitAtInput');
+            const conversationInput = visitEl('visitConversation');
             if (groupInput) groupInput.value = localStorage.getItem(VISIT_GROUP_STORAGE_KEY) || '';
             if (nameInput) nameInput.value = localStorage.getItem(VISIT_NAME_STORAGE_KEY) || '';
             if (visitAtInput && !visitAtInput.value) visitAtInput.value = formatDateTimeLocalValue();
+            if (conversationInput && !conversationInput.value) {
+                conversationInput.value = localStorage.getItem(VISIT_CONVERSATION_DRAFT_KEY) || '';
+            }
             applyEasyTextMode(localStorage.getItem(EASY_TEXT_STORAGE_KEY) === '1');
+            updateVisitVoiceAvailability();
 
             let refreshTimer;
             groupInput?.addEventListener('input', () => {
@@ -1961,10 +2239,13 @@
                 localStorage.setItem(VISIT_NAME_STORAGE_KEY, nameInput.value.trim());
                 syncVisitSubmitState();
             });
+            conversationInput?.addEventListener('input', saveVisitConversationDraft);
             visitEl('easyTextToggle')?.addEventListener('click', toggleEasyTextMode);
             visitEl('visitMakeCodeButton')?.addEventListener('click', makeVisitGroupCode);
             visitEl('visitCopyCodeButton')?.addEventListener('click', copyVisitGroupCode);
             visitEl('visitShareCodeButton')?.addEventListener('click', shareVisitGroupCode);
+            visitEl('visitVoiceStartButton')?.addEventListener('click', startVisitVoiceInput);
+            visitEl('visitVoiceStopButton')?.addEventListener('click', stopVisitVoiceInput);
             visitEl('visitCurrentPinButton')?.addEventListener('click', setCurrentVisitPin);
             visitEl('visitCoordinateButton')?.addEventListener('click', setCoordinateVisitPin);
             visitEl('visitSubmitButton')?.addEventListener('click', submitVisitReport);
